@@ -23,7 +23,8 @@ no seal, no eagle-and-scales, and no "IRS" in the brand, wordmark, title or doma
 | File | Purpose |
 |---|---|
 | `index.html` | Home |
-| `file.html` | The 5-step intake wizard |
+| `lander-2.html` | Short qualifying form + callback booking (paid-traffic destination) |
+| `file.html` | The 5-step intake wizard (self-serve, detailed) |
 | `how-it-works.html` | The engagement, step by step |
 | `what-you-need.html` | Document checklist |
 | `faq.html` | 16 questions, accordion |
@@ -38,6 +39,25 @@ should be added to any page unless it is supported by a line in `FACTS.md`.**
 
 ---
 
+## Two funnels
+
+- **`lander-2.html`** is the short, high-conversion path built for Google Ads: six
+  qualifying questions + contact + a **callback booking**, then a confirmation. It asks
+  only what predicts the fee and flags a lead — it does **not** ask for wallet balances,
+  a list of specific exchanges, or holdings values. Point paid traffic here.
+- **`file.html`** is the detailed self-serve 5-step wizard, kept for anyone who prefers to
+  fill everything in themselves. Both are live; compare them on real numbers before
+  retiring either.
+
+### The callback picker (`lander-2.html`)
+
+Five "next available" slots are generated in the browser, anchored to the **firm's**
+business hours (Mon–Fri, 09:00–17:00 America/Los_Angeles) so a booked call never lands
+when the office is closed, and **displayed in the visitor's own timezone** with the zone
+named. A sixth option, "Another time", reveals a date + time field. No fake scarcity — the
+slots change only because time moves forward. The confirmation echoes the chosen time back.
+Times roll past weekends automatically.
+
 ## The forms send nothing
 
 Both forms are demonstration only. There is no `action`, no `method`, no `fetch`, and
@@ -51,8 +71,10 @@ client has approved how that data is handled.
 ### Wiring the form up for real
 
 1. Replace the submit handler in `assets/js/wizard.js` (marked with a comment) with a
-   `POST` to the firm's own server, over HTTPS.
-2. Do the same for the handler at the bottom of `contact.html`.
+   `POST` to the firm's own server, over HTTPS. Do the same in `assets/js/lander2.js`
+   (the `submit()` function) and at the bottom of `contact.html`.
+2. All three carry the same guard: `type="button"` send, `onsubmit="return false"`, and a
+   `<noscript>` fallback — so there is no native submission path even with JS off. Keep it.
 3. **Do not log the payload.**
 4. **Update `privacy.html` first.** It currently states — truthfully — that the site
    sets no cookies, runs no analytics, and transmits nothing. Adding an endpoint or

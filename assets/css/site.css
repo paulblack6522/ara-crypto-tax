@@ -1668,3 +1668,168 @@ body.us-modal-open { overflow: hidden; }
 .us-wizard-step { display: block; }
 .us-wizard-step.is-hidden,
 .us-wizard-step[hidden] { display: none !important; }
+
+/* ==========================================================================
+   Lander 2 (lander-2.html) — short qualifying form + callback booking
+   Layout and the callback slot picker. Everything else reuses the classes
+   above. Nothing here overrides a token; colours come from :root only.
+   ========================================================================== */
+
+/* Two-column: form on the left, "what happens next" aside on the right.
+   Single column below 64em. */
+.us-lander-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-5);
+}
+@media (min-width: 64em) {
+  .us-lander-grid {
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+    gap: var(--s-6);
+    align-items: start;
+  }
+  .us-lander-aside { position: sticky; top: var(--s-3); }
+}
+
+/* Trust row under the hero — factual, no credentials, no numbers. */
+.us-trustrow {
+  list-style: none;
+  margin: var(--s-3) 0 0;
+  padding: 0;
+  display: grid;
+  gap: var(--s-105);
+}
+@media (min-width: 40em) {
+  .us-trustrow { grid-template-columns: repeat(3, 1fr); gap: var(--s-3); }
+}
+.us-trustrow__item {
+  position: relative;
+  padding-left: var(--s-4);
+  font-size: var(--fs-xs);
+  color: var(--c-base-darker);
+  line-height: 1.4;
+}
+.us-trustrow__item::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0.05em;
+  width: 1.25rem; height: 1.25rem;
+  background: var(--c-brand);
+  /* a simple check mark cut out of a filled square — no external asset */
+  -webkit-mask: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23000' d='M6.4 11.2 3.2 8l1.1-1.1 2.1 2.1 4.3-4.3L11.8 5.8z'/%3E%3C/svg%3E") no-repeat center / contain;
+          mask: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23000' d='M6.4 11.2 3.2 8l1.1-1.1 2.1 2.1 4.3-4.3L11.8 5.8z'/%3E%3C/svg%3E") no-repeat center / contain;
+}
+
+/* The callback slot picker: real radios styled as selectable buttons. */
+.us-slotgrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-105);
+  margin-top: var(--s-105);
+}
+@media (min-width: 30em) { .us-slotgrid { grid-template-columns: repeat(3, 1fr); } }
+
+.us-slot { position: relative; margin: 0; }
+.us-slot__input {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0; border: 0;
+  clip: rect(0 0 0 0); clip-path: inset(50%);
+  overflow: hidden; white-space: nowrap;
+}
+.us-slot__label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-height: 2.75rem;
+  justify-content: center;
+  padding: var(--s-105) var(--s-2);
+  border: 2px solid var(--c-base-dark);
+  border-radius: var(--radius);
+  background: var(--c-white);
+  color: var(--c-ink);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-bold);
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background var(--transition), border-color var(--transition);
+}
+.us-slot__label .us-slot__day {
+  font-size: var(--fs-3xs);
+  font-weight: var(--fw-normal);
+  color: var(--c-base-dark);
+}
+.us-slot__label:hover { border-color: var(--c-brand); background: var(--c-base-lightest); }
+.us-slot__input:checked + .us-slot__label {
+  border-color: var(--c-brand);
+  background: var(--c-brand);
+  color: var(--c-white);
+}
+.us-slot__input:checked + .us-slot__label .us-slot__day { color: var(--c-brand-light); }
+.us-slot__input:focus-visible + .us-slot__label {
+  outline: 4px solid var(--c-focus);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px var(--c-focus-halo);
+}
+
+.us-tz {
+  margin-top: var(--s-105);
+  font-size: var(--fs-2xs);
+  color: var(--c-base-dark);
+}
+.us-tz strong { color: var(--c-base-darker); font-weight: var(--fw-bold); }
+
+/* The "another time" reveal — a native date + time within business hours. */
+.us-when {
+  margin-top: var(--s-2);
+  padding: var(--s-2);
+  border: var(--border) solid var(--c-base-lighter);
+  border-radius: var(--radius);
+  background: var(--c-base-lightest);
+}
+.us-when[hidden] { display: none; }
+.us-when__row { display: grid; gap: var(--s-2); }
+@media (min-width: 30em) { .us-when__row { grid-template-columns: 1fr 1fr; } }
+
+/* "What happens next" numbered list inside the aside. */
+.us-next {
+  list-style: none;
+  margin: 0; padding: 0;
+  counter-reset: next;
+}
+.us-next__item {
+  position: relative;
+  padding: 0 0 var(--s-3) var(--s-5);
+  counter-increment: next;
+}
+.us-next__item:last-child { padding-bottom: 0; }
+.us-next__item::before {
+  content: counter(next);
+  position: absolute;
+  left: 0; top: 0;
+  width: 2rem; height: 2rem;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--c-brand);
+  color: var(--c-white);
+  font-weight: var(--fw-bold);
+  border-radius: 50%;
+}
+/* a thin rule connecting the numbered steps */
+.us-next__item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 0.9375rem; top: 2rem; bottom: 0.5rem;
+  width: 2px;
+  background: var(--c-base-lighter);
+}
+.us-next__title { font-weight: var(--fw-bold); color: var(--c-ink); }
+.us-next__text { margin: 0.15rem 0 0; color: var(--c-base-darker); font-size: var(--fs-xs); line-height: 1.45; }
+
+/* Section grouping inside the lander form (three labelled sections). */
+.us-fieldset--section { margin-top: var(--s-6); }
+.us-fieldset--section:first-of-type { margin-top: var(--s-3); }
+.us-fieldset--section > .us-legend {
+  padding-bottom: var(--s-1);
+  margin-bottom: var(--s-2);
+  border-bottom: 2px solid var(--c-brand);
+}
