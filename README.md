@@ -53,10 +53,24 @@ should be added to any page unless it is supported by a line in `FACTS.md`.**
 
 Five "next available" slots are generated in the browser, anchored to the **firm's**
 business hours (Mon–Fri, 09:00–17:00 America/Los_Angeles) so a booked call never lands
-when the office is closed, and **displayed in the visitor's own timezone** with the zone
-named. A sixth option, "Another time", reveals a date + time field. No fake scarcity — the
-slots change only because time moves forward. The confirmation echoes the chosen time back.
-Times roll past weekends automatically.
+when the office is closed. A sixth option, "Another time", reveals a date + time field.
+No fake scarcity — the slots change only because time moves forward. The confirmation
+echoes the chosen time back. Times roll past weekends automatically.
+
+**Timezone is chosen by the visitor, never auto-detected** — a US-zone selector
+(Eastern / Central / Mountain / Pacific), defaulting to Eastern. Changing it re-labels the
+same slots into that zone (the underlying appointment instants do not move). This is a
+deliberate rule; do not add browser timezone detection.
+
+### "Call me now" (`lander-2.html`)
+
+An immediate-callback request beside the scheduler: it validates the contact details (not
+the slot), then shows a green "assigning a preparer" overlay with a spinner, which after a
+short wait resolves to a plain confirmation that a preparer will call the number given.
+**It is a placeholder for a real telephony / click-to-call back end — in this build no call
+is placed, and it never claims a live call connected.** A real deployment drives the
+connected state from the telephony provider. The staff are called "preparers", not
+"experts" — a new firm cannot substantiate a credential/skill claim.
 
 ## The forms send nothing
 

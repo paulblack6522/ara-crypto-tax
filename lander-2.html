@@ -286,6 +286,16 @@
             <fieldset class="us-fieldset us-fieldset--section">
               <legend class="us-legend">Choose a time for your call</legend>
 
+              <div class="us-tzpick">
+                <label class="us-tzpick__label" for="cb-tz">Your timezone</label>
+                <select class="us-select" id="cb-tz" name="timezone" data-tz-select>
+                  <option value="ET" selected>Eastern (ET)</option>
+                  <option value="CT">Central (CT)</option>
+                  <option value="MT">Mountain (MT)</option>
+                  <option value="PT">Pacific (PT)</option>
+                </select>
+              </div>
+
               <div class="us-form-group" data-field data-name="callback_slot" data-required="true" data-error="Pick one of the times, or choose Another time and fill it in.">
                 <fieldset class="us-fieldset" data-group aria-describedby="slot-hint">
                   <legend class="us-legend us-legend--sm">Next available times <span class="us-required">*</span></legend>
@@ -299,7 +309,7 @@
                     </noscript>
                   </div>
 
-                  <p class="us-tz" data-tz hidden>All times are shown in your timezone: <strong data-tz-name>&mdash;</strong>. Business hours are Monday to Friday, Pacific time.</p>
+                  <p class="us-tz" data-tz hidden>Times are shown in <strong data-tz-name>&mdash;</strong>, the timezone you selected above. Our office hours are Monday to Friday, Pacific time.</p>
 
                   <div class="us-radio" style="margin-top:var(--s-2)">
                     <input class="us-radio__input" type="radio" id="slot-other" name="callback_slot" value="other" data-slot-other>
@@ -318,8 +328,13 @@
                       <input class="us-input" type="time" id="cb-time" name="callback_time" data-when-time>
                     </div>
                   </div>
-                  <p class="us-meta" style="margin-top:var(--s-105)">Give the time in your own timezone. If it falls outside our business hours we will email you to agree the nearest time.</p>
+                  <p class="us-meta" style="margin-top:var(--s-105)">Give the time in the timezone you selected above. If it falls outside our office hours we will email you to agree the nearest time.</p>
                 </div>
+              </div>
+
+              <div class="us-callnow">
+                <p class="us-callnow__text"><strong>Would rather not wait?</strong> Ask a preparer to call you as soon as one is free, instead of booking a time.</p>
+                <button class="us-button us-button--now" type="button" data-call-now>Call me now</button>
               </div>
             </fieldset>
 
@@ -458,6 +473,36 @@
       <button class="us-button" type="button" data-modal-close>Close</button>
       <a class="us-button us-button--outline" href="what-you-need.html">See what we will need</a>
     </div>
+  </div>
+</div>
+
+<!-- "Call me now" waiting overlay. This is a placeholder for a real telephony /
+     click-to-call integration. In this build NO call is placed: lander2.js shows
+     the "assigning" wait for a few seconds, then reveals a plain confirmation that
+     a preparer will call the number given. It never claims a live call connected.
+     A real deployment drives the connected state from the telephony back end. -->
+<div class="us-modal-overlay" data-modal id="calling" hidden>
+  <div class="us-modal us-calling" role="dialog" aria-modal="true" aria-labelledby="calling-title">
+
+    <div data-calling-wait>
+      <div class="us-calling__spinner" aria-hidden="true"></div>
+      <h2 class="us-calling__heading" id="calling-title">Assigning a preparer</h2>
+      <p class="us-calling__text" role="status" aria-live="polite">We are assigning a crypto tax filing preparer to you. Please keep this window open and your phone nearby &mdash; this message updates as soon as your request is in.</p>
+      <div class="us-modal__actions" style="justify-content:center">
+        <button class="us-button us-button--outline" type="button" data-modal-close>Cancel</button>
+      </div>
+    </div>
+
+    <div data-calling-done hidden>
+      <div class="us-calling__done-icon" aria-hidden="true"></div>
+      <h2 class="us-calling__heading">You are in the queue</h2>
+      <p class="us-calling__text">A preparer will call you at <strong data-calling-phone></strong> shortly. Please keep your phone nearby. If we cannot reach you, we will email you to arrange another time.</p>
+      <p class="us-meta" style="text-align:center;margin-top:var(--s-2)">No payment is due now. Nothing is charged until you have read a written quote and told us to go ahead.</p>
+      <div class="us-modal__actions" style="justify-content:center">
+        <button class="us-button" type="button" data-modal-close data-calling-doneclose>Close</button>
+      </div>
+    </div>
+
   </div>
 </div>
 

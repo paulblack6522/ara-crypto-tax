@@ -8,16 +8,24 @@
    trackers, no cookies. Nothing in this file sends anything anywhere.
 
    Provides:
-     1. Callback slots   — five rolling "next available" times, anchored to the
-                           firm's business hours (Mon-Fri, 09:00-17:00 Pacific)
-                           and DISPLAYED in the visitor's own timezone.
-     2. "Another time"   — reveals a native date + time when chosen.
-     3. Validation       — inline errors, aria-invalid, focus move, error summary.
-     4. Submit           — preventDefault always; opens the confirmation modal via
-                           the shared window.AraSite.openModal. Nothing is sent.
+     1. Timezone           — the VISITOR chooses a US zone (Eastern / Central /
+                             Mountain / Pacific). Nothing is auto-detected.
+     2. Callback slots      — five rolling "next available" times, anchored to the
+                             firm's business hours (Mon-Fri, 09:00-17:00 Pacific)
+                             and shown in the zone the visitor picked.
+     3. "Another time"     — reveals a native date + time when chosen.
+     4. "Call me now"      — an immediate-callback request: a green "assigning a
+                             preparer" waiting overlay that resolves to a plain
+                             confirmation. It does NOT place a live call in the
+                             browser; a real deployment wires it to the firm's
+                             telephony / click-to-call and drives the connected
+                             state from there.
+     5. Validation         — inline errors, aria-invalid, focus move, error summary.
+     6. Submit             — preventDefault always; opens the confirmation modal.
+                             Nothing is sent.
 
-   A real deployment replaces the submit handler with a POST to the firm's own
-   server over HTTPS, and MUST NOT log the payload. See README.md.
+   A real deployment replaces the submit and call-now handlers with a POST to the
+   firm's own server over HTTPS, and MUST NOT log the payload. See README.md.
    ========================================================================== */
 
 (function () {
@@ -37,15 +45,29 @@
   var SLOT_COUNT = 5;
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-  /* value(ISO) -> friendly label, for the confirmation message. */
-  var slotLabels = {};
+  /* US display zones. The visitor picks one; nothing is detected. */
+  var ZONES = {
+    ET: { label: 'Eastern (ET)',  iana: 'America/New_York' },
+    CT: { label: 'Central (CT)',  iana: 'America/Chicago' },
+    MT: { label: 'Mountain (MT)', iana: 'America/Denver' },
+    PT: { label: 'Pacific (PT)',  iana: 'America/Los_Angeles' }
+  };
+
+  var slotInstants = [];          /* fixed Date instants for the five slots */
+  var slotLabels = {};            /* iso -> friendly label in the chosen zone */
+
+  function zoneKey() {
+    var sel = $('[data-tz-select]', form);
+    var k = sel ? sel.value : 'ET';
+    return ZONES[k] ? k : 'ET';
+  }
+  function zone() { return ZONES[zoneKey()]; }
 
 
   /* ---------------------------------------------------------------------- */
   /* 1. Callback slots                                                       */
   /* ---------------------------------------------------------------------- */
 
-  /* Wall-clock parts of an instant in a given IANA timezone. */
   function partsIn(date, tz) {
     var fmt = new Intl.DateTimeFormat('en-US', {
       timeZone: tz, hour12: false,
@@ -55,7 +77,7 @@
     var out = {};
     fmt.formatToParts(date).forEach(function (p) { out[p.type] = p.value; });
     var h = parseInt(out.hour, 10);
-    if (h === 24) { h = 0; }              /* some engines report 24 at midnight */
+    if (h === 24) { h = 0; }
     return { y: +out.year, mo: +out.month, d: +out.day, h: h,
              mi: parseInt(out.minute, 10), wd: out.weekday };
   }
@@ -67,38 +89,27 @@
     return WEEKDAYS[p.wd] === 1 && p.h >= 9 && p.h < 17;   /* 09:00 .. 16:30 start */
   }
 
-  function visitorTz() {
-    try {
-      var tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      return tz || 'your local time';
-    } catch (e) { return 'your local time'; }
-  }
-
-  /* Day label in the VISITOR's timezone: Today / Tomorrow / "Mon, Aug 3". */
-  function dayLabel(date) {
+  /* Day label in the CHOSEN zone: Today / Tomorrow / "Mon, Aug 3". */
+  function dayLabel(date, tz) {
+    var opt = { timeZone: tz, year: 'numeric', month: 'numeric', day: 'numeric' };
     var today = new Date();
     var tomorrow = new Date(today.getTime() + 24 * 60 * 60 * 1000);
-    var d = date.toLocaleDateString([], { year: 'numeric', month: 'numeric', day: 'numeric' });
-    if (d === today.toLocaleDateString([], { year: 'numeric', month: 'numeric', day: 'numeric' })) {
-      return 'Today';
-    }
-    if (d === tomorrow.toLocaleDateString([], { year: 'numeric', month: 'numeric', day: 'numeric' })) {
-      return 'Tomorrow';
-    }
-    return date.toLocaleDateString([], { weekday: 'short', month: 'short', day: 'numeric' });
+    var d = date.toLocaleDateString('en-US', opt);
+    if (d === today.toLocaleDateString('en-US', opt)) { return 'Today'; }
+    if (d === tomorrow.toLocaleDateString('en-US', opt)) { return 'Tomorrow'; }
+    return date.toLocaleDateString('en-US', { timeZone: tz, weekday: 'short', month: 'short', day: 'numeric' });
+  }
+  function timeLabel(date, tz) {
+    return date.toLocaleTimeString('en-US', { timeZone: tz, hour: 'numeric', minute: '2-digit' });
   }
 
-  function timeLabel(date) {
-    return date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
-  }
-
-  function nextSlots() {
+  function computeInstants() {
     var slots = [];
     var start = new Date(Date.now() + BUFFER_MS);
-    start = new Date(Math.ceil(start.getTime() / STEP_MS) * STEP_MS);  /* to next :00/:30 */
+    start = new Date(Math.ceil(start.getTime() / STEP_MS) * STEP_MS);
     var t = start.getTime();
     var guard = 0;
-    while (slots.length < SLOT_COUNT && guard < 24 * 60 * 2 * 14 / 30) { /* ~2 weeks */
+    while (slots.length < SLOT_COUNT && guard < 24 * 60 * 14 / 30) { /* ~2 weeks of 30-min steps */
       var d = new Date(t);
       if (isFirmHour(d)) { slots.push(d); }
       t += STEP_MS;
@@ -107,53 +118,57 @@
     return slots;
   }
 
-  function renderSlots() {
+  /* Build the slot radios once. Labels are (re)written by relabelSlots(). */
+  function buildSlots() {
     var grid = $('[data-slotgrid]', form);
     if (!grid) { return; }
-
-    var slots = nextSlots();
-    /* Clear any fallback content (e.g. the noscript note is only for no-JS). */
+    slotInstants = computeInstants();
     grid.innerHTML = '';
-
-    slots.forEach(function (date, i) {
-      var iso = date.toISOString();
-      var day = dayLabel(date);
-      var time = timeLabel(date);
-      slotLabels[iso] = day + ' at ' + time + ' (' + visitorTz() + ')';
-
+    slotInstants.forEach(function (date, i) {
       var wrap = document.createElement('div');
       wrap.className = 'us-slot';
-
       var input = document.createElement('input');
       input.className = 'us-slot__input';
       input.type = 'radio';
       input.name = 'callback_slot';
       input.id = 'slot-' + i;
-      input.value = iso;
+      input.value = date.toISOString();
       input.setAttribute('data-slot', '');
-
       var label = document.createElement('label');
       label.className = 'us-slot__label';
       label.setAttribute('for', 'slot-' + i);
       label.innerHTML = '<span class="us-slot__time"></span><span class="us-slot__day"></span>';
-      label.querySelector('.us-slot__time').textContent = time;
-      label.querySelector('.us-slot__day').textContent = day;
-
       wrap.appendChild(input);
       wrap.appendChild(label);
       grid.appendChild(wrap);
     });
+  }
 
-    /* Timezone note, now that we know the zone. */
+  /* Rewrite every slot's visible label + the label map for the chosen zone. */
+  function relabelSlots() {
+    var z = zone();
+    slotLabels = {};
+    $all('[data-slot]', form).forEach(function (input, i) {
+      var date = slotInstants[i];
+      var day = dayLabel(date, z.iana);
+      var time = timeLabel(date, z.iana);
+      slotLabels[input.value] = day + ' at ' + time + ' ' + zoneKey();
+      var label = input.nextElementSibling;
+      label.querySelector('.us-slot__time').textContent = time;
+      label.querySelector('.us-slot__day').textContent = day;
+    });
     var tzNote = $('[data-tz]', form);
     var tzName = $('[data-tz-name]', form);
     if (tzNote && tzName) {
-      tzName.textContent = visitorTz();
+      tzName.textContent = z.label;
       tzNote.removeAttribute('hidden');
     }
+  }
 
-    /* Choosing a real slot hides the "another time" panel; choosing "another
-       time" reveals it. They are one radio group, so selection is exclusive. */
+  function initSlots() {
+    buildSlots();
+    relabelSlots();
+
     var whenPanel = $('[data-when]', form);
     var otherRadio = $('[data-slot-other]', form);
     var dateInput = $('[data-when-date]', form);
@@ -167,18 +182,19 @@
         whenPanel.setAttribute('hidden', '');
       }
     }
-
     $all('input[name="callback_slot"]', form).forEach(function (r) {
       r.addEventListener('change', syncWhen);
     });
 
-    /* Do not let a past date be chosen in the free-time picker. */
+    var tzSelect = $('[data-tz-select]', form);
+    if (tzSelect) { tzSelect.addEventListener('change', relabelSlots); }
+
     if (dateInput) {
       var now = new Date();
-      var iso = now.getFullYear() + '-' +
+      dateInput.setAttribute('min',
+        now.getFullYear() + '-' +
         String(now.getMonth() + 1).padStart(2, '0') + '-' +
-        String(now.getDate()).padStart(2, '0');
-      dateInput.setAttribute('min', iso);
+        String(now.getDate()).padStart(2, '0'));
     }
   }
 
@@ -188,7 +204,6 @@
   /* ---------------------------------------------------------------------- */
 
   var errorSeq = 0;
-
   function controlsOf(group) { return $all('input, select, textarea', group); }
   function isChoice(c) { return c.type === 'checkbox' || c.type === 'radio'; }
 
@@ -227,7 +242,6 @@
     message.id = id;
     message.textContent = text;
     group.classList.add('us-form-group--error');
-
     var fieldset = $('[data-group]', group);
     var controls = controlsOf(group);
     if (fieldset) {
@@ -254,8 +268,6 @@
     if (!controls.length) { return null; }
     var first = controls[0];
 
-    /* The callback group: a slot must be chosen; if "Another time" is chosen,
-       the date and time must be filled in. */
     if (name === 'callback_slot') {
       var chosen = $all('input[name="callback_slot"]', group).filter(function (r) { return r.checked; })[0];
       if (!chosen) { return message; }
@@ -266,13 +278,11 @@
       }
       return null;
     }
-
     if (isChoice(first)) {
       var any = controls.some(function (c) { return c.checked; });
       if (required && !any) { return message; }
       return null;
     }
-
     var value = (first.value || '').trim();
     if (required && !value) { return message; }
     if (first.type === 'email' && value && !EMAIL_RE.test(value)) {
@@ -294,11 +304,14 @@
     return el;
   }
 
-  function validateAll() {
-    var groups = $all('[data-field]', form).filter(function (g) { return !g.hasAttribute('hidden'); });
+  /* skip: array of data-name values not to validate (e.g. the slot, for Call me now) */
+  function validateAll(skip) {
+    skip = skip || [];
+    var groups = $all('[data-field]', form).filter(function (g) {
+      return !g.hasAttribute('hidden') && skip.indexOf(g.getAttribute('data-name')) === -1;
+    });
     var firstBad = null;
     var count = 0;
-
     groups.forEach(function (group) {
       var problem = problemWith(group);
       if (problem) {
@@ -309,23 +322,16 @@
         clearError(group);
       }
     });
-
     var summary = summaryEl();
     var summaryText = $('[data-form-summary-text]', summary);
-    if (!count) {
-      summary.setAttribute('hidden', '');
-      return true;
-    }
+    if (!count) { summary.setAttribute('hidden', ''); return true; }
     summaryText.textContent = count === 1
       ? 'There is 1 answer to complete before you can send this.'
       : 'There are ' + count + ' answers to complete before you can send this.';
     summary.removeAttribute('hidden');
-
     if (firstBad && firstBad.control) {
       try { firstBad.control.focus({ preventScroll: true }); }
       catch (e) { firstBad.control.focus(); }
-      /* Scroll the error message, not the group: a group taller than the
-         viewport would otherwise push the message off the top of the screen. */
       var errEl = firstBad.group.querySelector('.us-error-message') || firstBad.group;
       if (errEl.scrollIntoView) { errEl.scrollIntoView({ block: 'center' }); }
     }
@@ -334,7 +340,7 @@
 
 
   /* ---------------------------------------------------------------------- */
-  /* 3. Submit — demo only, nothing leaves the page                          */
+  /* 3. Scheduled submit — demo only, nothing leaves the page                */
   /* ---------------------------------------------------------------------- */
 
   function chosenWhen() {
@@ -347,13 +353,18 @@
         var dt = new Date(d.value + 'T' + t.value);
         var nice = isNaN(dt.getTime())
           ? (d.value + ' at ' + t.value)
-          : dt.toLocaleString([], { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
-        return ': ' + nice + ' (' + visitorTz() + ')';
+          : dt.toLocaleString('en-US', { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+        return ': ' + nice + ' ' + zoneKey();
       }
       return '';
     }
     var label = slotLabels[chosen.value];
     return label ? ': ' + label : '';
+  }
+
+  function phoneValue() {
+    var el = $('#cb-phone', form);
+    return el ? (el.value || '').trim() : '';
   }
 
   function submit() {
@@ -365,16 +376,67 @@
     }
   }
 
+
+  /* ---------------------------------------------------------------------- */
+  /* 4. "Call me now" — immediate-callback request                           */
+  /* ---------------------------------------------------------------------- */
+  /* The waiting overlay is a placeholder for a real telephony / click-to-call
+     back end. In this build no call is placed; after a short "assigning" wait it
+     resolves to a plain confirmation that a preparer will call the number given.
+     It never claims a live call has connected. */
+
+  var callTimer = null;
+
+  function initCallNow() {
+    var overlay = document.getElementById('calling');
+    var btn = $('[data-call-now]', form);
+    if (!overlay || !btn) { return; }
+
+    var waitBlock = $('[data-calling-wait]', overlay);
+    var doneBlock = $('[data-calling-done]', overlay);
+    var donePhone = $('[data-calling-phone]', overlay);
+    var doneClose = $('[data-calling-doneclose]', overlay);
+
+    function resetToWait() {
+      if (callTimer) { window.clearTimeout(callTimer); callTimer = null; }
+      if (waitBlock) { waitBlock.removeAttribute('hidden'); }
+      if (doneBlock) { doneBlock.setAttribute('hidden', ''); }
+    }
+
+    btn.addEventListener('click', function () {
+      /* Everything except the scheduled slot must be there so we can call them. */
+      if (!validateAll(['callback_slot'])) { return; }
+      resetToWait();
+      if (donePhone) { donePhone.textContent = phoneValue(); }
+      if (window.AraSite && typeof window.AraSite.openModal === 'function') {
+        window.AraSite.openModal('calling');
+      }
+      /* Simulate the request being queued, then reveal the honest confirmation. */
+      callTimer = window.setTimeout(function () {
+        if (waitBlock) { waitBlock.setAttribute('hidden', ''); }
+        if (doneBlock) { doneBlock.removeAttribute('hidden'); }
+        if (doneClose && typeof doneClose.focus === 'function') { doneClose.focus(); }
+      }, 3500);
+    });
+
+    /* If the visitor cancels/closes mid-wait, stop the timer and re-arm. */
+    $all('[data-modal-close]', overlay).forEach(function (c) {
+      c.addEventListener('click', resetToWait);
+    });
+    overlay.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' || e.key === 'Esc') { resetToWait(); }
+    });
+  }
+
+
+  /* ---------------------------------------------------------------------- */
+  /* Wiring                                                                  */
+  /* ---------------------------------------------------------------------- */
+
   var sendBtn = $('[data-callback-send]', form);
   if (sendBtn) { sendBtn.addEventListener('click', submit); }
-
-  /* Enter inside a text field must never submit natively. */
   form.addEventListener('submit', function (event) { event.preventDefault(); });
 
-
-  /* ---------------------------------------------------------------------- */
-  /* Boot                                                                    */
-  /* ---------------------------------------------------------------------- */
-
-  renderSlots();
+  initSlots();
+  initCallNow();
 }());
