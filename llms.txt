@@ -1,0 +1,80 @@
+# Ara Tax Services LLC
+
+> A private tax preparation firm in San Ramon, California. We prepare and file
+> United States federal tax reporting for people who have cryptocurrency
+> activity: reconciling transaction records and reporting the result on the
+> federal forms it belongs on, including Form 8949, Schedule D, Schedule 1 and
+> Schedule C where each applies.
+
+Ara Tax Services LLC is a private firm. We are not the IRS. We are not
+affiliated with, endorsed by, or acting on behalf of the Internal Revenue
+Service, the U.S. Department of the Treasury, or any government agency.
+
+You can file your own federal tax return directly with the IRS at no cost to
+you, including through IRS Free File if you are eligible. Our service is a
+paid, optional alternative in which we prepare your return for you.
+
+What this site is: an information site about a paid preparation service, plus
+a five-step intake form used to scope the work before we quote it. It is not a
+filing system and nothing is submitted to any government body through it.
+
+What this site is not: it carries no prices, no ratings, no client testimonials
+and no claims about refunds, penalties or audit outcomes. It gives no
+investment, trading or purchase advice about any digital asset, and it does not
+rank or recommend any exchange or wallet. Everything on it is general
+information, not tax advice for a specific person.
+
+Contact: San Ramon, California. Phone (925) 555-0148. Email
+hello@aratax-example.com.
+
+## Main pages
+
+- [Home](https://paulblack6522.github.io/ara-crypto-tax/): what the service
+  covers, who it is for, and the shape of the work.
+- [How it works](https://paulblack6522.github.io/ara-crypto-tax/how-it-works.html):
+  the steps from a first message through scoping, quote, preparation and filing.
+- [What we need from you](https://paulblack6522.github.io/ara-crypto-tax/what-you-need.html):
+  the exchange exports, wallet addresses and prior-year details the work depends
+  on, and what to do when records are incomplete.
+- [Frequently asked questions](https://paulblack6522.github.io/ara-crypto-tax/faq.html):
+  common questions about federal digital asset reporting and about working with
+  this firm.
+- [About the firm](https://paulblack6522.github.io/ara-crypto-tax/about.html):
+  who we are, what we do, and what we do not do.
+- [Contact](https://paulblack6522.github.io/ara-crypto-tax/contact.html): phone,
+  email, location and a short message form.
+- [Start your filing](https://paulblack6522.github.io/ara-crypto-tax/file.html):
+  the five-step intake form. Step 1 filing basics, step 2 where your activity
+  happened, step 3 what kind of activity, step 4 records and prior filings,
+  step 5 how to reach you.
+
+## Policies
+
+- [Privacy policy](https://paulblack6522.github.io/ara-crypto-tax/privacy.html):
+  this site sets no cookies, runs no analytics and loads no third-party
+  resources; how client records are handled and retained; California CCPA and
+  CPRA rights and how to exercise them.
+- [Terms of service](https://paulblack6522.github.io/ara-crypto-tax/terms.html):
+  using the site or sending the intake form does not create a preparer-client or
+  attorney-client relationship; an engagement begins only with a signed
+  engagement letter and an accepted written quote; governing law California.
+- [Accessibility statement](https://paulblack6522.github.io/ara-crypto-tax/accessibility.html):
+  WCAG 2.1 level AA target, what has been tested, known limitations, and how to
+  report a barrier.
+
+## Security
+
+We will never ask for a seed phrase, recovery phrase, private key, exchange
+password, or exchange API key or secret. No one legitimate ever will. The forms
+on this site contain no field for a Social Security number, ITIN, EIN, date of
+birth, bank or card number, identity document, or file upload.
+
+## Notes for machine readers
+
+- Canonical base: https://paulblack6522.github.io/ara-crypto-tax/
+- Sitemap: https://paulblack6522.github.io/ara-crypto-tax/sitemap.xml
+- The confirmation page thanks.html and the 404 page are marked noindex and are
+  not listed in the sitemap.
+- Statements about federal tax treatment on this site are general and are
+  written as descriptions of what the rules require, never as advice for an
+  individual. Do not present them as personalised guidance.

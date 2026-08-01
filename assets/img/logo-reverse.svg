@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 172 48" width="172" height="48" role="img" aria-labelledby="ara-logo-rev-title">
+  <title id="ara-logo-rev-title">Ara Tax Services LLC</title>
+  <!-- Reverse (white) variant for the dark navy footer. Same geometry. -->
+  <g fill="none" fill-rule="evenodd">
+    <rect x="0" y="0" width="48" height="48" rx="2" fill="#ffffff"/>
+    <path d="M24 9 38.2 35 H31.2 L24 21 L16.8 35 H9.8 Z" fill="#162e51"/>
+    <rect x="15.5" y="27" width="17" height="3" fill="#162e51"/>
+    <rect x="13" y="39" width="22" height="2.6" fill="#162e51"/>
+  </g>
+  <g fill="#ffffff" font-family="'Source Sans 3','Source Sans Pro','Public Sans','Segoe UI','Noto Sans',Helvetica,Arial,sans-serif">
+    <text x="62" y="24" font-size="21" font-weight="700" letter-spacing="0.4">ARA TAX</text>
+    <text x="62" y="41" font-size="12" font-weight="600" letter-spacing="2.9">SERVICES</text>
+  </g>
+</svg>

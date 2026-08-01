@@ -1,0 +1,13 @@
+# SAMPLE BUILD — this preview is blocked from all crawlers so it cannot be indexed
+# under the client's real business name or compete with their live site.
+#
+# GOING LIVE on the client's own domain: replace this whole file with the block
+# at the bottom, and switch every page's robots meta to "index, follow".
+User-agent: *
+Disallow: /
+
+# --- production version, commented out until launch -------------------------
+# User-agent: *
+# Allow: /
+# Disallow: /thanks.html
+# Sitemap: https://paulblack6522.github.io/ara-crypto-tax/sitemap.xml

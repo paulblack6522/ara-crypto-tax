@@ -1,0 +1,342 @@
+ARA TAX SERVICES LLC — SHARED PARTIALS
+======================================================================
+THIS FILE IS NOT A PAGE. Do not link to it, do not deploy it, do not add
+it to the sitemap. It lives in `_system/`, which Jekyll (GitHub Pages)
+excludes from the build because the directory name starts with an
+underscore. If a `.nojekyll` file is ever added to this repo, delete
+`_system/` before publishing.
+
+HOW TO USE
+  Copy each block below VERBATIM into every page. Replace only the
+  {{DOUBLE_BRACE}} placeholders and the aria-current marker.
+
+HARD RULES THAT APPLY TO EVERY BLOCK
+  * Every internal href/src is RELATIVE with NO leading slash. This
+    deploys to a GitHub Pages project subpath; a leading "/" breaks
+    every link on every page. Never write href="/faq.html".
+  * The two footer disclosures are VERBATIM and are never shortened,
+    reworded, shrunk below 15px, greyed out, or hidden behind a link.
+  * One <h1> per page, inside <main>. The header/footer contain none.
+  * Nothing in these blocks may be edited to add: a flag, a seal, a
+    padlock strip, the word "official", ".gov", "IRS" inside our own
+    name, or any credential/track-record claim.
+
+PLACEHOLDER CONTACT DETAILS — use these and only these, everywhere:
+  Ara Tax Services LLC
+  San Ramon, California
+  (925) 555-0148            [reserved 555-01xx range, not a real number]
+  hello@aratax-example.com  [clearly non-real domain, this is a sample build]
+
+CANONICAL BASE
+  https://paulblack6522.github.io/ara-crypto-tax/
+
+
+======================================================================
+===== [HEAD] START ===================================================
+======================================================================
+PLACEHOLDERS
+  {{TITLE}}      Page-specific title text, ~50 chars max. Sentence case.
+                 The brand segment " | Ara Tax Services LLC" is already
+                 appended below — do NOT put "IRS" in the title.
+                 e.g. Crypto tax return preparation
+  {{DESC}}       Meta description, 140-158 chars, describes the WORK,
+                 never an outcome. No "maximize", no "save", no "guarantee".
+  {{CANONICAL}}  Full absolute URL of THIS page, e.g.
+                 https://paulblack6522.github.io/ara-crypto-tax/faq.html
+                 (the home page uses .../ara-crypto-tax/ with no filename)
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TITLE}} | Ara Tax Services LLC</title>
+<meta name="description" content="{{DESC}}">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="{{CANONICAL}}">
+<meta name="theme-color" content="#1a4480">
+<meta name="color-scheme" content="light">
+
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+<link rel="stylesheet" href="assets/css/site.css">
+<script src="assets/js/site.js" defer></script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://paulblack6522.github.io/ara-crypto-tax/#organization",
+      "name": "Ara Tax Services LLC",
+      "legalName": "Ara Tax Services LLC",
+      "url": "https://paulblack6522.github.io/ara-crypto-tax/",
+      "logo": "https://paulblack6522.github.io/ara-crypto-tax/assets/img/logo.svg",
+      "email": "hello@aratax-example.com",
+      "telephone": "+1-925-555-0148",
+      "description": "Ara Tax Services LLC is a private tax preparation firm in San Ramon, California. We prepare and file United States federal tax reporting for people with cryptocurrency activity. We are not affiliated with, endorsed by, or acting on behalf of the Internal Revenue Service, the U.S. Department of the Treasury, or any government agency.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "San Ramon",
+        "addressRegion": "CA",
+        "addressCountry": "US"
+      }
+    },
+    {
+      "@type": "LocalBusiness",
+      "@id": "https://paulblack6522.github.io/ara-crypto-tax/#business",
+      "name": "Ara Tax Services LLC",
+      "parentOrganization": { "@id": "https://paulblack6522.github.io/ara-crypto-tax/#organization" },
+      "url": "https://paulblack6522.github.io/ara-crypto-tax/",
+      "email": "hello@aratax-example.com",
+      "telephone": "+1-925-555-0148",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "San Ramon",
+        "addressRegion": "CA",
+        "addressCountry": "US"
+      },
+      "areaServed": { "@type": "Country", "name": "United States" }
+    }
+  ]
+}
+</script>
+
+NOTES ON THE JSON-LD — read before editing it
+  * There is deliberately NO aggregateRating, NO review, NO
+    AggregateRating/Review node of any kind, and NO award/credential
+    property. The firm is new; there is no history to describe.
+  * There is deliberately NO streetAddress. Do not invent one. If the
+    client supplies a real suite address, add streetAddress and
+    postalCode and nothing else.
+  * Do NOT add a `sameAs` array pointing at irs.gov or any government
+    site — `sameAs` asserts identity.
+  * Do NOT add FAQPage or HowTo markup without checking it describes the
+    page's real visible content.
+  * If the page is the FAQ page you MAY add a separate FAQPage block, but
+    only where every question and answer is visibly on the page.
+======================================================================
+===== [HEAD] END =====================================================
+======================================================================
+
+
+======================================================================
+===== [HEADER] START =================================================
+======================================================================
+Paste as the FIRST thing inside <body>.
+
+SETTING THE ACTIVE NAV ITEM
+  On each page, add aria-current="page" to exactly one .us-nav__link.
+  Nothing else changes. Examples:
+    index.html          -> <a class="us-nav__link" href="index.html" aria-current="page">Home</a>
+    how-it-works.html   -> <a class="us-nav__link" href="how-it-works.html" aria-current="page">How it works</a>
+    what-you-need.html  -> <a class="us-nav__link" href="what-you-need.html" aria-current="page">What we need</a>
+    faq.html            -> <a class="us-nav__link" href="faq.html" aria-current="page">FAQ</a>
+    about.html          -> <a class="us-nav__link" href="about.html" aria-current="page">About</a>
+    contact.html        -> <a class="us-nav__link" href="contact.html" aria-current="page">Contact</a>
+    file.html           -> no nav item is current; the CTA is the destination.
+    privacy / terms / accessibility -> no nav item is current.
+  The stylesheet draws the 4px underline bar from the aria-current
+  attribute itself, so there is no extra class to add.
+
+<a class="us-skiplink" href="#main-content">Skip to main content</a>
+
+<header class="us-header">
+  <div class="us-utility-bar">
+    <div class="us-container us-utility-bar__inner">
+      <ul class="us-utility-list">
+        <li>San Ramon, California</li>
+        <li><a href="tel:+19255550148">(925)&nbsp;555-0148</a></li>
+        <li><a href="mailto:hello@aratax-example.com">hello@aratax-example.com</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="us-container us-masthead">
+    <a class="us-logo" href="index.html">
+      <img class="us-logo__img" src="assets/img/logo.svg" width="172" height="48" alt="Ara Tax Services LLC">
+    </a>
+
+    <button class="us-menu-btn" type="button" data-nav-toggle aria-controls="primary-nav" aria-expanded="false">
+      Menu
+    </button>
+
+    <nav class="us-nav" id="primary-nav" data-nav aria-label="Primary">
+      <button class="us-nav__close" type="button" data-nav-close>Close</button>
+      <ul class="us-nav__list">
+        <li class="us-nav__item"><a class="us-nav__link" href="index.html">Home</a></li>
+        <li class="us-nav__item"><a class="us-nav__link" href="how-it-works.html">How it works</a></li>
+        <li class="us-nav__item"><a class="us-nav__link" href="what-you-need.html">What we need</a></li>
+        <li class="us-nav__item"><a class="us-nav__link" href="faq.html">FAQ</a></li>
+        <li class="us-nav__item"><a class="us-nav__link" href="about.html">About</a></li>
+        <li class="us-nav__item"><a class="us-nav__link" href="contact.html">Contact</a></li>
+      </ul>
+      <a class="us-nav__cta" href="file.html">Start your filing</a>
+    </nav>
+  </div>
+
+  <div class="us-nav-scrim" data-nav-scrim></div>
+</header>
+
+<main id="main-content">
+  ... page content, containing exactly one <h1> ...
+</main>
+
+ALTERNATIVE TEXT LOCKUP (optional, not required)
+  If a page needs the firm name as live text rather than an image, the
+  stylesheet already carries .us-logo__text / .us-logo__name /
+  .us-logo__tag for this shape:
+      <a class="us-logo" href="index.html">
+        <img class="us-logo__img" src="assets/img/favicon.svg" width="48" height="48" alt="">
+        <span class="us-logo__text">
+          <span class="us-logo__name">Ara Tax Services LLC</span>
+          <span class="us-logo__tag">Crypto tax reporting</span>
+        </span>
+      </a>
+  Use one form or the other — never both on the same page.
+======================================================================
+===== [HEADER] END ===================================================
+======================================================================
+
+
+======================================================================
+===== [BREADCRUMB] START =============================================
+======================================================================
+Paste as the first thing inside <main>, above the <h1>, on every page
+EXCEPT index.html (the home page has no breadcrumb).
+
+Replace {{PAGE_TITLE}} with the current page's short name. The current
+page is plain text, never a link.
+
+  <nav class="us-breadcrumb us-container" aria-label="Breadcrumb">
+    <ol class="us-breadcrumb__list">
+      <li class="us-breadcrumb__item"><a class="us-breadcrumb__link" href="index.html">Home</a></li>
+      <li class="us-breadcrumb__item"><span class="us-breadcrumb__current" aria-current="page">{{PAGE_TITLE}}</span></li>
+    </ol>
+  </nav>
+
+THREE-LEVEL VARIANT (only if a genuine parent page exists):
+
+  <nav class="us-breadcrumb us-container" aria-label="Breadcrumb">
+    <ol class="us-breadcrumb__list">
+      <li class="us-breadcrumb__item"><a class="us-breadcrumb__link" href="index.html">Home</a></li>
+      <li class="us-breadcrumb__item"><a class="us-breadcrumb__link" href="{{PARENT_FILE}}">{{PARENT_TITLE}}</a></li>
+      <li class="us-breadcrumb__item"><span class="us-breadcrumb__current" aria-current="page">{{PAGE_TITLE}}</span></li>
+    </ol>
+  </nav>
+======================================================================
+===== [BREADCRUMB] END ===============================================
+======================================================================
+
+
+======================================================================
+===== [FOOTER] START =================================================
+======================================================================
+Paste immediately after </main>, as the last thing inside <body>.
+
+DO NOT EDIT THE TWO PARAGRAPHS INSIDE .us-footer__legal. They are
+required verbatim on every page. They are set at 15px with an 11.9:1
+contrast ratio against their background; that is the floor, not a
+starting point. Do not move them behind a link, into a modal, into an
+accordion, or onto a single "disclosures" page.
+
+<footer class="us-footer">
+  <div class="us-footer__top us-container">
+    <div class="us-footer__nav">
+
+      <div>
+        <h2 class="us-footer__heading">Our service</h2>
+        <ul class="us-footer__list">
+          <li><a href="how-it-works.html">How it works</a></li>
+          <li><a href="what-you-need.html">What we need from you</a></li>
+          <li><a href="file.html">Start your filing</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="us-footer__heading">Answers</h2>
+        <ul class="us-footer__list">
+          <li><a href="faq.html">Frequently asked questions</a></li>
+          <li><a href="about.html">About the firm</a></li>
+          <li><a href="contact.html">Contact us</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="us-footer__heading">This site</h2>
+        <ul class="us-footer__list">
+          <li><a href="privacy.html">Privacy policy</a></li>
+          <li><a href="terms.html">Terms of service</a></li>
+          <li><a href="accessibility.html">Accessibility statement</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="us-footer__heading">Ara Tax Services LLC</h2>
+        <address class="us-footer__contact">
+          <p>San Ramon, California</p>
+          <p><a href="tel:+19255550148">(925)&nbsp;555-0148</a></p>
+          <p><a href="mailto:hello@aratax-example.com">hello@aratax-example.com</a></p>
+        </address>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="us-footer__legal">
+    <div class="us-container">
+
+      <p class="us-footer__disclosure">Ara Tax Services LLC is a private tax preparation firm. We are not the IRS. We are not affiliated with, endorsed by, or acting on behalf of the Internal Revenue Service, the U.S. Department of the Treasury, or any government agency.</p>
+
+      <p class="us-footer__disclosure">You can file your own federal tax return directly with the IRS at no cost to you, including through IRS Free File if you are eligible. Our service is a paid, optional alternative in which we prepare your return for you.</p>
+
+      <div class="us-footer__bottom">
+        <p>&copy; <span data-current-year>2026</span> Ara Tax Services LLC. All rights reserved.</p>
+        <ul class="us-footer__bottom-links">
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="accessibility.html">Accessibility</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</footer>
+
+WHY EACH PIECE IS THERE
+  * The address/phone/email column is a Google Ads financial-services
+    disclosure requirement: the physical business location and contact
+    details must be visible without a click or a hover. Keep it in the
+    footer of every page.
+  * The first legal paragraph is the non-affiliation statement. It is
+    the single line that separates a private firm using a public-domain
+    design system from an impersonation of a government site.
+  * The second legal paragraph is the free-alternative disclosure. It is
+    what keeps paid search inside Google's "Government documents and
+    official services" policy. It is not optional and it is not to be
+    made small.
+  * <span data-current-year>2026</span> — site.js overwrites the text
+    with the real current year. The hard-coded 2026 is the fallback for
+    users and crawlers without JavaScript. Leave it in.
+======================================================================
+===== [FOOTER] END ===================================================
+======================================================================
+
+
+======================================================================
+===== [BONUS] SECURITY NOTICE FOR THE INTAKE FORM ====================
+======================================================================
+Required on file.html, in a visible box, ABOVE the first field of step 1.
+Verbatim, no edits:
+
+  <div class="us-security-note">
+    <p class="us-security-note__heading">Before you start</p>
+    <p>We will never ask for your seed phrase, private keys, exchange passwords, or API keys. No one legitimate ever will.</p>
+  </div>
+
+The intake form also must not contain a field for: Social Security
+number, ITIN, EIN, date of birth, seed or recovery phrase, private key,
+exchange password, exchange API key or secret, bank account or routing
+number, card number, driver's licence, passport, or a document upload.
+Not as an optional field. Not with a "you can skip this" note.
+======================================================================
