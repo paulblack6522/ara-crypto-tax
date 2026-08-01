@@ -712,9 +712,11 @@ blockquote {
 }
 .us-summary-box__text { margin: 0; }
 .us-summary-box > :last-child { margin-bottom: 0; }
-.us-summary-box a { color: var(--c-link); }
-.us-summary-box a:visited { color: var(--c-link-visited); }
-.us-summary-box a:hover   { color: var(--c-link-hover); }
+/* Exclude buttons: a button-styled <a> keeps its own white/navy, or a
+   .us-summary-box a rule would paint navy text onto the navy button (ink-on-ink). */
+.us-summary-box a:not(.us-button) { color: var(--c-link); }
+.us-summary-box a:not(.us-button):visited { color: var(--c-link-visited); }
+.us-summary-box a:not(.us-button):hover   { color: var(--c-link-hover); }
 
 
 /* ==========================================================================
