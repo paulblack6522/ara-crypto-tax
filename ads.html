@@ -39,6 +39,7 @@
   .seasonal td{font-size:13px;white-space:nowrap}
   .peak{color:var(--accent);font-weight:600}
   .trough{color:var(--muted)}
+  .cut{color:var(--muted);text-decoration:line-through}
   footer{color:var(--muted);font-size:13px;text-align:center;padding:30px;border-top:1px solid var(--border);margin-top:40px}
 </style>
 </head>
@@ -46,10 +47,10 @@
 <header>
   <h1>🧾 Ara Tax Services — Crypto Tax Search Campaign</h1>
   <p><b>Client</b> Ara Tax Services LLC, San Ramon CA &nbsp;·&nbsp; <b>Landing page</b> <a href="lander-2.html">lander-2.html</a> (swap to the real domain at launch)</p>
-  <p>Keyword volumes pulled live from Google Keyword Planner (US / English) on 2026-08-04 — not estimates.</p>
+  <p><b>Rev 2 · 2026-08-04</b> — tightened to a closed campaign on Bob's call: <b>one ad group, service-intent keywords only, two ads</b>. Broad head terms cut. Keyword volumes pulled live from Google Keyword Planner (US / English) on 2026-08-04 — not estimates.</p>
   <p style="margin-top:10px">
-    <span class="pill">Search only</span><span class="pill">2 ad groups</span><span class="pill">DKI</span>
-    <span class="pill">Real KP volumes ✓</span><span class="pill">No credential claims</span><span class="pill">US · English</span>
+    <span class="pill">Search only</span><span class="pill">1 ad group</span><span class="pill">16 keywords</span>
+    <span class="pill">2 RSAs</span><span class="pill">Real KP volumes ✓</span><span class="pill">No credential claims</span><span class="pill">US · English</span>
   </p>
 </header>
 <div class="wrap">
@@ -57,7 +58,7 @@
 <div class="callout danger">
 <b>⚠️ Four gates before a single dollar is spent — none are optional:</b>
 <ol style="margin:8px 0 0;padding-left:20px">
-<li><b>CTEC / credential check.</b> California requires a paid preparer who is not a CPA/EA/attorney to be CTEC-registered (CRTP). Confirm the firm's status in writing first. This campaign deliberately avoids every certification keyword (see §2), but the registration itself is a legal gate, not an ads gate.</li>
+<li><b>CTEC / credential check.</b> California requires a paid preparer who is not a CPA/EA/attorney to be CTEC-registered (CRTP). Confirm the firm's status in writing first. This campaign deliberately avoids every certification keyword (see §0), but the registration itself is a legal gate, not an ads gate.</li>
 <li><b>Real domain.</b> The github.io sample is noindex and not ad-ready. Final URLs below use the sample path — swap the domain, keep the paths.</li>
 <li><b>Real phone + address on the site.</b> Placeholders <code>(925) 555-0148</code> / <code>hello@aratax-example.com</code> must be replaced — Google Ads verification will check reachability.</li>
 <li><b>Form endpoint + privacy page.</b> Wire the lander form to a real HTTPS endpoint and edit <code>privacy.html</code> FIRST (today it truthfully says nothing is transmitted).</li>
@@ -65,51 +66,58 @@
 </div>
 
 <div class="toc">
-  <a href="#facts">0 · What the keyword data says</a>
+  <a href="#facts">0 · The keyword cut — kept vs rejected</a>
   <a href="#settings">1 · Campaign settings</a>
-  <a href="#keywords">2 · Ad groups &amp; keywords</a>
-  <a href="#ads">3 · RSA ads (1 DKI per group)</a>
+  <a href="#keywords">2 · The ad group (one)</a>
+  <a href="#ads">3 · Two RSA ads</a>
   <a href="#ext">3b · Extensions</a>
   <a href="#negs">4 · Negative keywords</a>
   <a href="#track">5 · Final URL &amp; conversions</a>
   <a href="#launch">6 · Launch checklist</a>
 </div>
 
-<h2 id="facts">0 · What the keyword data says (Keyword Planner, US, pulled 2026-08-04)</h2>
+<h2 id="facts">0 · The keyword cut (Keyword Planner, US, pulled 2026-08-04)</h2>
 
+<p>Doctrine applied: <b>transactional and commercial intent only at launch</b> — a searcher describing a <i>service they want done</i>, not a concept they're reading about. Informational head terms are where a young account's budget goes to die: high volume, no lead. They can be layered in later, funded by results.</p>
+
+<h3>KEPT — 11 exact terms, every one a service query</h3>
 <table>
-<tr><th>Keyword</th><th>Avg/mo</th><th>Competition</th><th>Top-of-page bid (high)</th><th>Read</th></tr>
-<tr><td><code>form 8949</code></td><td><b>18,100</b></td><td>LOW</td><td>$3.30</td><td>The volume monster of this vertical — and cheap</td></tr>
-<tr><td><code>1099 da</code></td><td><b>6,600</b></td><td>LOW</td><td>$12.56</td><td>Brand-new form, first filing season was Feb 2026</td></tr>
-<tr><td><code>irs form 8949</code></td><td>6,600</td><td>LOW</td><td>$2.07</td><td>Cheapest qualified traffic on the board</td></tr>
-<tr><td><code>crypto taxes</code></td><td><b>3,600</b></td><td>MEDIUM</td><td>$11.36</td><td>Head term for the declaration group</td></tr>
-<tr><td><code>form 1099 da</code></td><td>1,600</td><td>LOW</td><td>$13.43</td><td>Same wave, longer form of the query</td></tr>
-<tr><td><code>form 8949 and schedule d</code></td><td>1,000</td><td>LOW</td><td>$4.27</td><td>Two-form confusion = exactly our pitch</td></tr>
-<tr><td><code>cryptocurrency taxes</code></td><td>720</td><td>LOW</td><td>$9.13</td><td>Head-term variant</td></tr>
-<tr><td><code>crypto tax form</code></td><td>390</td><td>MEDIUM</td><td>$10.15</td><td>Bridges both groups; lives in AG2</td></tr>
-<tr><td><code>how to file crypto taxes</code></td><td>210</td><td>LOW</td><td>$6.52</td><td>DIY pain at the decision moment</td></tr>
-<tr><td><code>crypto tax professional</code></td><td>170</td><td>MEDIUM</td><td>$21.11</td><td>Service-seeker, priced like it</td></tr>
-<tr><td><code>crypto tax help</code></td><td>90</td><td>MEDIUM</td><td>$33.41</td><td>Highest bid measured — someone in trouble</td></tr>
+<tr><th>Keyword</th><th>Avg/mo</th><th>Competition</th><th>Top-of-page bid (high)</th><th>Why it's in</th></tr>
+<tr><td><code>[how to file crypto taxes]</code></td><td><b>210</b></td><td>LOW</td><td>$6.52</td><td>DIYer at the decision moment — the ad's answer is "don't, we do it"</td></tr>
+<tr><td><code>[crypto tax professional]</code></td><td>170</td><td>MEDIUM</td><td>$21.11</td><td>Explicitly shopping for a person</td></tr>
+<tr><td><code>[crypto tax preparer near me]</code></td><td>140</td><td>MEDIUM</td><td>—</td><td>Preparer-seeker; callback model serves any US zip</td></tr>
+<tr><td><code>[crypto tax service]</code></td><td>110</td><td>LOW</td><td>$12.76</td><td>The word "service" is the intent</td></tr>
+<tr><td><code>[irs crypto reporting]</code></td><td>110</td><td>LOW</td><td>$10.72</td><td>The declaration query with real volume</td></tr>
+<tr><td><code>[crypto tax help]</code></td><td>90</td><td>MEDIUM</td><td><b>$33.41</b></td><td>Most expensive click on the board — someone in trouble, exactly the lead we want</td></tr>
+<tr><td><code>[crypto tax services]</code></td><td>90</td><td>LOW</td><td>$15.36</td><td>Plural variant, same intent</td></tr>
+<tr><td><code>[file crypto taxes]</code></td><td>70</td><td>MEDIUM</td><td>$10.29</td><td>Verb-first = do-it intent</td></tr>
+<tr><td><code>[crypto tax preparation]</code></td><td>70</td><td>MEDIUM</td><td>$17.12</td><td>Service noun, priced like a service</td></tr>
+<tr><td><code>[crypto tax preparer]</code></td><td>70</td><td>MEDIUM</td><td>$17.12</td><td>Preparer-seeker</td></tr>
+<tr><td><code>[crypto tax filing]</code></td><td>50</td><td>HIGH</td><td>$9.43</td><td>HIGH competition = other services already convert on it</td></tr>
+</table>
+<p><b>Total measured exact volume ≈ 1,180/mo</b> (August trough — see seasonality). This is a low-volume, high-value campaign by design: expect single-digit clicks/day now, several times that Jan–Apr.</p>
+
+<h3>CUT — broad / informational, rejected at launch</h3>
+<table>
+<tr><td><span class="cut">crypto taxes</span> — 3,600/mo</td><td>Reads about the topic; May–Jun floor 1,300 shows it's seasonal curiosity, not demand for a preparer</td></tr>
+<tr><td><span class="cut">cryptocurrency taxes / taxes on crypto</span> — 720/mo each</td><td>Same informational family</td></tr>
+<tr><td><span class="cut">do you have to report crypto on taxes</span> — 140/mo</td><td>Pre-intent question traffic</td></tr>
+<tr><td><span class="cut">crypto tax rate / how do taxes work…</span></td><td>Pure research — <code>tax rate</code> is negatived in §4; the rest can't match a closed list anyway</td></tr>
+<tr><td><span class="cut">form 8949 / 1099 da</span> — 18,100 + 6,600/mo</td><td><b>Parked, not dead</b> — see the note under §2</td></tr>
 </table>
 
-<h3>Seasonality — this vertical breathes in an annual cycle</h3>
-<table class="seasonal">
-<tr><th>Keyword</th><th>Jul25</th><th>Aug25</th><th>Sep25</th><th>Oct25</th><th>Nov25</th><th>Dec25</th><th>Jan26</th><th>Feb26</th><th>Mar26</th><th>Apr26</th><th>May26</th><th>Jun26</th></tr>
-<tr><td><code>form 8949</code></td><td>8,100</td><td class="trough">8,100</td><td>9,900</td><td class="peak">12,100</td><td>6,600</td><td>8,100</td><td>18,100</td><td class="peak">49,500</td><td class="peak">60,500</td><td class="peak">49,500</td><td class="trough">6,600</td><td class="trough">5,400</td></tr>
-<tr><td><code>1099 da</code></td><td>1,600</td><td class="trough">1,600</td><td>1,600</td><td>1,900</td><td>1,900</td><td>2,900</td><td>8,100</td><td class="peak">22,200</td><td class="peak">14,800</td><td>9,900</td><td>3,600</td><td class="trough">2,400</td></tr>
-<tr><td><code>crypto taxes</code></td><td>5,400</td><td class="trough">3,600</td><td>3,600</td><td>4,400</td><td>2,900</td><td>2,900</td><td>4,400</td><td class="peak">5,400</td><td class="peak">5,400</td><td>4,400</td><td class="trough">1,300</td><td class="trough">1,300</td></tr>
-</table>
-
-<div class="callout">
-<b>Three things this data decides:</b>
-<ol style="margin:8px 0 0;padding-left:20px">
-<li><b>Feb–Apr is the harvest</b> — <code>form 8949</code> runs ~11× its June floor at the March peak. A campaign launched now enters its learning phase in the cheap season and hits filing season already calibrated.</li>
-<li><b>October 15 is the nearest revenue window.</b> Extension filers produce a real secondary bump (<code>form 8949</code> Oct25: 12,100). "Behind on crypto filings?" is the message that matches it.</li>
-<li><b>1099-DA is a live wave, not a legacy term.</b> First forms ever were furnished Feb 2026; the next wave lands Jan–Feb 2027, and those forms start carrying cost basis. Confused recipients searching a form number they've never seen = the best lead profile in this campaign.</li>
-</ol>
+<div class="callout ok">
+<b>Why there are zero certification keywords — deliberate, not an oversight.</b> Keyword Planner shows real volume on <code>crypto tax accountant</code> (210/mo, $20.91), <code>crypto cpa near me</code> (210/mo, $19.58), <code>cpa cryptocurrency</code> (210/mo, $20.20), <code>crypto accountant near me</code> (210/mo). <b>All excluded, and negatived in §4.</b> A searcher typing CPA/accountant/EA is shopping for a credential the firm has not shown us it holds — the ad would misrepresent by context even with clean copy, and the click costs $20 to disappoint. The same logic keeps <code>audit</code> out: IRS audit representation legally requires CPA/EA/attorney status. If the firm later documents real credentials, these unlock as their own ad group — the demand is measured and waiting.
 </div>
 
-<p style="color:var(--muted)">Skipped on purpose: <code>fbar crypto</code>, <code>form 8938 cryptocurrency</code>, <code>schedule d crypto</code> — all ~10 searches/mo or fewer. Bidding them directly starves the account of data; phrase match collects them anyway when they matter.</p>
+<h3>Seasonality — the market breathes annually; budget with it</h3>
+<table class="seasonal">
+<tr><th>Keyword</th><th>Jul25</th><th>Aug25</th><th>Sep25</th><th>Oct25</th><th>Nov25</th><th>Dec25</th><th>Jan26</th><th>Feb26</th><th>Mar26</th><th>Apr26</th><th>May26</th><th>Jun26</th></tr>
+<tr><td><code>crypto taxes</code> (market gauge)</td><td>5,400</td><td class="trough">3,600</td><td>3,600</td><td>4,400</td><td>2,900</td><td>2,900</td><td>4,400</td><td class="peak">5,400</td><td class="peak">5,400</td><td>4,400</td><td class="trough">1,300</td><td class="trough">1,300</td></tr>
+<tr><td><code>how to file crypto taxes</code></td><td class="trough">70</td><td>90</td><td>140</td><td>140</td><td>210</td><td>140</td><td>320</td><td class="peak">390</td><td class="peak">390</td><td class="peak">390</td><td class="trough">70</td><td>260</td></tr>
+<tr><td><code>crypto tax professional</code></td><td>170</td><td>170</td><td>170</td><td>170</td><td>210</td><td>260</td><td class="peak">320</td><td>210</td><td class="peak">260</td><td>140</td><td class="trough">30</td><td class="trough">10</td></tr>
+</table>
+<p style="color:var(--muted)"><b>October 15 is the nearest revenue window</b> — extension filers (note <code>how to file crypto taxes</code> holding 260/mo even in June: late filers exist year-round). Then Jan–Apr is the harvest: the kept terms in aggregate run ≈2.3× August levels — unevenly spread (preparer/preparation terms near-flat, <code>crypto tax preparer near me</code> 5×+, and note <code>crypto tax professional</code> actually dips by April). A campaign launched now enters filing season already calibrated.</p>
 
 <h2 id="settings">1 · Campaign settings</h2>
 <table>
@@ -118,8 +126,8 @@
 <tr><td>Locations</td><td><b>United States</b></td></tr>
 <tr><td>Location option</td><td><b>Presence: people IN the US</b> (not "presence or interest")</td></tr>
 <tr><td>Language</td><td>English</td></tr>
-<tr><td>Daily budget</td><td>Client's call. For scale: measured top-of-page bids run <b>$2–13</b> on the core terms, so $50/day ≈ 4–24 clicks/day</td></tr>
-<tr><td>Bidding — phase 1</td><td><b>Maximize Clicks</b>, Max CPC limit <b>$10.00</b> (keeps the $21–33 outlier terms from eating the budget)</td></tr>
+<tr><td>Daily budget</td><td>Client's call. At the kept terms' measured bids ($6.52–$33.41 top-of-page), expect <b>$10–20 per click</b> on the money terms — expensive leads, accepted on purpose.</td></tr>
+<tr><td>Bidding — phase 1</td><td><b>Maximize Clicks</b>, Max CPC limit <b>$20.00</b> — high enough to actually win service-intent auctions; <code>crypto tax help</code> ($33.41) and <code>crypto tax professional</code> ($21.11) sit above the cap and get rationed to lower positions</td></tr>
 <tr><td>Bidding — phase 2</td><td>After ~15–30 conversions → <b>Maximize Conversions / tCPA</b></td></tr>
 <tr><td>Conversions</td><td><b>"Request my callback" submit</b> (primary) · "Call me now" click (secondary) — both need the real endpoint first</td></tr>
 <tr><td>Auto-tagging</td><td><b>ON</b></td></tr>
@@ -127,37 +135,27 @@
 <tr><td>Audiences</td><td>Observation only, if any. No remarketing at launch.</td></tr>
 </table>
 
-<h2 id="keywords">2 · Ad groups &amp; keywords</h2>
-<p>Match types embedded — paste as-is. <code>[exact]</code> for the proven head terms, <code>"phrase"</code> to sweep the long tail into the search-terms report. No broad at launch.</p>
+<h2 id="keywords">2 · The ad group — one, closed</h2>
+<p>Match types embedded — paste as-is. <code>[exact]</code> for the 11 proven service terms, <code>"phrase"</code> for 5 sweepers that collect the longer variants into the search-terms report. <b>No broad. Nothing informational. Nothing navigational.</b></p>
 
-<div class="callout ok">
-<b>Why there are zero certification keywords — deliberate, not an oversight.</b> Keyword Planner shows real volume on <code>crypto tax accountant</code> (210/mo, $20.91), <code>crypto cpa near me</code> (210/mo, $19.58), <code>cpa cryptocurrency</code> (210/mo, $20.20), <code>crypto accountant near me</code> (210/mo). <b>All excluded, and negatived in §4.</b> A searcher typing CPA/accountant/EA is shopping for a credential the firm has not shown us it holds — the ad would misrepresent by context even with clean copy, and the click costs $20 to disappoint. The same logic keeps <code>audit</code> out: IRS audit representation legally requires CPA/EA/attorney status. If the firm later documents real credentials, these unlock as a third ad group — the demand is measured and waiting.
-</div>
-
-<h3>AG1 — IRS Crypto Declaration &nbsp;<span class="pill">DKI ✅</span> <span class="pill">19 keywords</span></h3>
-<p style="color:var(--muted)">Theme: "I have crypto and the IRS needs to know about it — someone do this for me." Head term <code>crypto taxes</code> (3,600/mo) carries the group; the two how-to phrases are kept deliberately — they're DIYers at the decision moment, and the ad's whole pitch is "stop, we'll do it".</p>
+<h3>AG1 — Crypto Tax Filing · Service Intent &nbsp;<span class="pill">DKI ✅</span> <span class="pill">16 keywords</span></h3>
 <!--KW1-->
+<p style="color:var(--muted)">Honesty note on two of the phrase sweepers: <code>"declare crypto on taxes"</code> measures 10 searches/mo and <code>"irs crypto declaration"</code> doesn't appear in any pull at all (US searchers say "report", not "declare"). They cost nothing to hold and catch the rare declaration-phrased query; <code>[irs crypto reporting]</code> (110/mo) is the same intent in the language the market actually uses.</p>
 
-<h3>AG2 — IRS Forms · 8949 / 1099-DA &nbsp;<span class="pill">DKI ✅</span> <span class="pill">15 keywords</span></h3>
-<p style="color:var(--muted)">Theme: a person holding a specific form number. <code>form 8949</code> at 18,100/mo and $3.30 is this campaign's discovery engine — the §4 negatives strip the PDF-hunters and instruction-readers, and the search-terms report tells us in week one what the residue really is. <code>1099 da</code> (6,600/mo) is the premium slice: people holding a form that has never existed before.</p>
-<!--KW2-->
+<div class="callout"><b>Parked, not dead — the forms ad group (8949 / 1099-DA).</b> <code>form 8949</code> is 18,100/mo at $3.30 and <code>1099 da</code> 6,600/mo, but form-number traffic skews DIY/PDF-hunting and this launch stays closed. <b>Re-decide in early January:</b> the next 1099-DA wave lands Jan–Feb 2027 (first-ever basis reporting on 2026-year forms), and recipients of a form they've never seen are genuine help-seekers. The keyword data for that group is preserved in the 2026-08-04 KP pulls.</div>
 
-<div class="callout"><b>Scaling note (doctrine, not a launch task):</b> exact and phrase ideally live in separate ad groups so each can be read cleanly. At this account's size we launch lean — 2 groups, both match types — and split the phrase sweepers out into their own groups once the search-terms report has enough volume to justify it.</div>
+<h2 id="ads">3 · Two RSA ads (both in the one ad group)</h2>
+<p>All headlines ≤30 chars, descriptions ≤90, verified by script. No credential words ("expert", "certified", "CPA"), no outcome promises, no "official", no urgency theater. Ad A leads with the keyword (DKI); Ad B leads with the hand-it-off promise — two angles, and the ad-strength report will say which one this audience believes.</p>
 
-<h2 id="ads">3 · RSA ads — one DKI RSA per group</h2>
-<p>All headlines ≤30 chars, descriptions ≤90, verified by script. No credential words ("expert", "certified", "CPA"), no outcome promises, no "official", no urgency theater — the copy sells the mechanism: six questions → callback → prepared return.</p>
+<h3>Ad A — DKI · "this is the service you searched for"</h3>
+<div class="label">Headlines</div><!--HA-->
+<div class="label">Descriptions</div><!--DA-->
+<div class="label">Paths</div><!--PA-->
 
-<h3>AG1 RSA — IRS Crypto Declaration</h3>
-<div class="label">Headlines</div><!--H1-->
-<div class="label">Descriptions</div><!--D1-->
-<div class="label">Paths</div><!--P1-->
-
-<h3>AG2 RSA — IRS Forms · 8949 / 1099-DA</h3>
-<div class="label">Headlines</div><!--H2-->
-<div class="label">Descriptions</div><!--D2-->
-<div class="label">Paths</div><!--P2-->
-
-<div class="callout"><b>Copy fact to re-check in 2027:</b> "Most 1099-DAs show proceeds, not your basis" is true for the forms taxpayers hold today (most 2025-year statements omit basis; Form 8949 box G covers the exceptions). Brokers begin adding basis on 2026-year forms furnished in early 2027 — revisit the line then.</div>
+<h3>Ad B — "hand it off" angle (no DKI)</h3>
+<div class="label">Headlines</div><!--HB-->
+<div class="label">Descriptions</div><!--DB-->
+<div class="label">Paths</div><!--PB-->
 
 <h2 id="ext">3b · Extensions (campaign level)</h2>
 <div class="label">Sitelinks (swap domain at launch)</div><!--SL-->
@@ -165,13 +163,13 @@
 <div class="label">Structured snippet</div><!--EX-->
 
 <h2 id="negs">4 · Negative keywords — one shared list, apply to the campaign</h2>
-<p>Four jobs in one list: <b>(1)</b> block every certification query (CPA/EA/accountant/attorney — see §2), <b>(2)</b> block DIY software and exchange-navigational traffic (people looking for Coinbase's tax page or TurboTax, not a preparer), <b>(3)</b> strip form-PDF hunters from AG2, <b>(4)</b> keep us out of the tax-relief restricted category (relief / settlement / penalty terms) and away from evasion queries.</p>
+<p>Four jobs in one list: <b>(1)</b> block every certification query (CPA/EA/accountant/attorney — see §0), <b>(2)</b> block DIY software and exchange-navigational traffic (people looking for Coinbase's tax page or TurboTax, not a preparer), <b>(3)</b> block form-PDF hunters, <b>(4)</b> keep us out of the tax-relief restricted category (relief / settlement / penalty terms) and away from evasion queries. With a closed keyword list the negatives mostly guard the 5 phrase sweepers — cheap insurance.</p>
 <!--NEG-->
 <div class="callout"><b>Words checked as safe to block:</b> none of these appear inside any positive keyword above (verified by script). <code>help</code>, <code>irs</code>, <code>form</code>, <code>schedule</code>, <code>near me</code> and year numbers are deliberately NOT negatived — they're load-bearing. <code>back taxes</code> is also left biddable: prior-year filers are a stated service segment. <b>One deliberate tradeoff:</b> the exchange-name negatives (coinbase, kraken…) also block future "<code>coinbase 1099 da</code>"-type recipient queries — no such query has measured volume yet, but re-check the search-terms report in January and carve out exceptions if that wave appears.</div>
 
 <h2 id="track">5 · Final URL &amp; conversions</h2>
 <table>
-<tr><td>Final URL (both groups)</td><td><code>https://&lt;real-domain&gt;/lander-2.html</code> — today's sample: <code>https://paulblack6522.github.io/ara-crypto-tax/lander-2.html</code></td></tr>
+<tr><td>Final URL (both ads)</td><td><code>https://&lt;real-domain&gt;/lander-2.html</code> — today's sample: <code>https://paulblack6522.github.io/ara-crypto-tax/lander-2.html</code></td></tr>
 <tr><td>Tracking template</td><td>None needed — auto-tagging (GCLID) covers it. No affiliate params on a client campaign.</td></tr>
 <tr><td>Primary conversion</td><td>"Request my callback" submit — fire on the real endpoint's success response, not on button click</td></tr>
 <tr><td>Secondary conversion</td><td>"Call me now" click — micro-conversion, observation only, don't optimize to it</td></tr>
@@ -179,98 +177,80 @@
 
 <h2 id="launch">6 · Launch checklist</h2>
 <ul class="check">
-<li>☐ §Gates cleared: CTEC/credential confirmation in writing · real domain · real phone/address · live form endpoint · privacy.html updated</li>
-<li>☐ Create campaign — Search only, US presence, English, Max Clicks @ $10 cap</li>
-<li>☐ Build 2 ad groups, paste keyword blocks as-is</li>
+<li>☐ Gates cleared: CTEC/credential confirmation in writing · real domain · real phone/address · live form endpoint · privacy.html updated</li>
+<li>☐ Create campaign — Search only, US presence, English, Max Clicks @ $20 cap</li>
+<li>☐ Build the one ad group, paste the keyword block as-is</li>
 <li>☐ Paste §4 negatives into a shared list → apply to campaign</li>
-<li>☐ Build both RSAs + paths, add sitelinks/callouts/snippet (swap domains)</li>
+<li>☐ Build Ad A + Ad B with paths, add sitelinks/callouts/snippet (swap domains)</li>
 <li>☐ Conversion actions: callback submit (primary) + call-now click (secondary)</li>
-<li>☐ Enable; read the search-terms report at 48h — expected first finding: what bare <code>form 8949</code> residue looks like; negative accordingly</li>
-<li>☐ Re-pull Keyword Planner in early January before filing season — bids will move</li>
+<li>☐ Enable; read the search-terms report at 48h — with a closed list the report is short; every term in it is a decision (negative it, or promote it to exact)</li>
+<li>☐ Early January: re-pull Keyword Planner (bids move for filing season) + re-decide the parked forms group</li>
 </ul>
 
 </div>
-<footer>Ara Tax Services · crypto tax search campaign · volumes from Google Keyword Planner (US) 2026-08-04 · internal working doc — not part of the client sample site</footer>
+<footer>Ara Tax Services · crypto tax search campaign · Rev 2 (closed, one ad group) · volumes from Google Keyword Planner (US) 2026-08-04 · internal working doc — not part of the client sample site</footer>
 
 <script>
 const B=(t)=>{const d=document.createElement('div');d.className='block';const b=document.createElement('button');b.className='copybtn';b.textContent='Copy';const p=document.createElement('pre');p.textContent=t;b.onclick=()=>{navigator.clipboard.writeText(t).then(()=>{b.textContent='Copied ✓';b.classList.add('done');setTimeout(()=>{b.textContent='Copy';b.classList.remove('done')},1400)})};d.appendChild(b);d.appendChild(p);return d};
 const data={
-KW1:`[crypto taxes]
-[cryptocurrency taxes]
-[taxes on crypto]
-[crypto tax filing]
+KW1:`[crypto tax filing]
+[file crypto taxes]
+[how to file crypto taxes]
+[crypto tax service]
+[crypto tax services]
 [crypto tax preparation]
+[crypto tax preparer]
+[crypto tax preparer near me]
 [crypto tax help]
 [crypto tax professional]
-[crypto tax preparer near me]
 [irs crypto reporting]
-[irs crypto tax]
-[reporting crypto on taxes]
-[how to file crypto taxes]
-"file crypto taxes"
-"report crypto on taxes"
-"help with crypto taxes"
 "crypto tax filing service"
-"crypto tax preparer"
+"file my crypto taxes"
+"help with crypto taxes"
 "declare crypto on taxes"
-"report cryptocurrency to the irs"`,
-KW2:`[form 8949]
-[irs form 8949]
-[tax form 8949]
-[form 8949 and schedule d]
-[8949 schedule d]
-[1099 da]
-[form 1099 da]
-[crypto tax form]
-[crypto tax form 8949]
-[crypto 8949]
-"form 8949 for crypto"
-"1099 da crypto"
-"form 8949 help"
-"how to fill out form 8949"
-"schedule d for crypto"`,
-H1:`{KeyWord:Crypto Tax Filing}
-Crypto Tax Returns, Filed
-Report Crypto to the IRS
-We Prepare Your Crypto Return
-Form 8949 & Schedule D Done
-Exchanges, Wallets & DeFi
+"irs crypto declaration"`,
+HA:`{KeyWord:Crypto Tax Filing}
+Crypto Tax Filing Service
+We File Crypto Taxes for You
 Talk to a Crypto Tax Preparer
+Form 8949 & Schedule D Done
 Book a Callback That Fits You
-NFT, Staking & Mining Income
+Every Exchange & Wallet
 Behind on Crypto Filings?
 Six Questions, Then a Call
 A Private Firm — Not the IRS
-California-Based Preparers
+DeFi, NFT & Staking Income
 Clear Process, No Jargon
+California-Based Preparers
+Report Crypto to the IRS
 Every Transaction Reported`,
-D1:`Crypto tax returns prepared and filed — Form 8949, Schedule D, the digital asset question.
+DA:`Crypto tax returns prepared and filed — Form 8949, Schedule D, the digital asset question.
 Answer six short questions, book a callback in your time zone. A preparer does the rest.
 Exchange trades, wallets, DeFi, NFTs, staking and mining — reported to the IRS correctly.
 Ara Tax Services is a private firm, not the IRS. Straight answers on what you must file.`,
-P1:`Path 1: crypto-taxes
+PA:`Path 1: crypto-taxes
 Path 2: filing`,
-H2:`{KeyWord:Form 8949 Help}
-Form 8949 Prepared for You
-Got a 1099-DA? We Can Help
-8949 and Schedule D, Done
-We File IRS Crypto Forms
-Confused by Form 8949?
-From 1099-DA to Filed Return
-Cost Basis Worked Out for You
-Every Trade, Every Form
-Talk to a Tax Preparer
-Book a Callback Today
-Digital Asset Question, Done
-New Form 1099-DA, Explained
-Crypto Forms Filed Properly
-Skip the 8949 Spreadsheet`,
-D2:`Form 8949, Schedule D and the 1040 digital asset question — prepared and filed for you.
-Most 1099-DAs show proceeds, not your basis. We work out the basis before you file.
-Tell us what you traded and where. A preparer matches your records to the right IRS forms.
-Six short questions, then a callback at a time you pick. A private firm — not the IRS.`,
-P2:`Path 1: form-8949
-Path 2: help`,
+HB:`Done-for-You Crypto Taxes
+Hand Off Your Crypto Return
+A Preparer Calls You Back
+Your Trades, Filed Right
+No Spreadsheets, No Guesswork
+Crypto Tax Filing, Handled
+Missed a Year? We Catch It Up
+Pick a Time, We Call You
+We Speak Crypto and Tax
+Wallets, Exchanges, DeFi
+Start With Six Questions
+Stop Wrestling With Form 8949
+Records In, Return Filed
+Honest Answers First
+No Seed Phrases, Ever`,
+DB:`Tell us what you traded and where. A preparer matches your records to the right IRS forms.
+Prior years unfiled? We prepare current and past crypto returns and set them straight.
+Book a callback in your own time zone, or ask a preparer to call as soon as one is free.
+No seed phrases, no wallet logins — we never ask. Just your records and six questions.`,
+PB:`Path 1: crypto-taxes
+Path 2: done-for-you`,
 SL:`How It Works  |  Six questions, then a callback  →  /how-it-works.html
 IRS Crypto Forms Guide  |  8949, Schedule D and 1099-DA  →  /forms.html
 What You'll Need  |  Records to gather before filing  →  /what-you-need.html
