@@ -131,40 +131,32 @@
 
         <h2>Conformance status</h2>
 
-        <p>We aim for WCAG 2.1 level AA on every page of this site. We believe the site meets that standard. We have not commissioned an independent audit, and we are not going to describe ourselves as certified or accredited by anyone, because we are not. If you find a place where we fall short, section "Report a barrier" below is the fastest way to get it fixed.</p>
+<p>We aim for WCAG 2.1 level AA on every page, and we believe the site meets it. We have not commissioned an independent audit, and we will not describe ourselves as certified or accredited by anyone, because we are not.</p>
 
-        <h2>What we have done</h2>
+<h2>What we have done</h2>
 
-        <ul class="us-list--spaced">
-          <li><strong>Semantic structure and landmarks.</strong> Every page uses real HTML landmarks: a banner header, a primary navigation region, a single main region, and a footer. Every page has exactly one <code>h1</code>, and headings below it descend in order without skipping a level.</li>
-          <li><strong>Skip to main content.</strong> The first thing a keyboard user reaches on every page is a skip link that jumps straight past the navigation to the main region.</li>
-          <li><strong>Labelled controls.</strong> Every form field has a real, visible label tied to it. Hints and error messages are associated with their field programmatically, so a screen reader announces them with the field rather than leaving them stranded on the page.</li>
-          <li><strong>Visible focus.</strong> Every link, button, field and interactive element shows a thick, high-contrast focus ring. The ring is never removed, on any element, in any state.</li>
-          <li><strong>Keyboard operable.</strong> Everything on this site can be reached and operated with a keyboard alone: the navigation drawer, the accordions, the request form and its callback picker, and the confirmation dialog. Nothing traps focus, and Escape closes the drawer and the dialog.</li>
-          <li><strong>Contrast.</strong> Text and background pairs are checked against the WCAG minimums of 4.5:1 for body text and 3:1 for large text. The colour tokens in the stylesheet carry their measured ratios next to them, so a future edit can be checked rather than guessed at. The required disclosures in the footer sit at 15px with an 14.9:1 ratio.</li>
-          <li><strong>Meaning never carried by colour alone.</strong> Errors, current navigation items and progress steps are all marked by text or shape as well as colour.</li>
-          <li><strong>Zoom and reflow.</strong> Pages are usable at 200% zoom and reflow to a 320px viewport without horizontal scrolling. Wide tables scroll inside their own container instead of pushing the page sideways. Font sizes are set in relative units, so a larger default text size in your browser settings is respected.</li>
-          <li><strong>Text, not pictures of text.</strong> Nothing that needs to be read is delivered as an image. Images that carry meaning have alternative text; images that are decorative are hidden from assistive technology.</li>
-          <li><strong>Reduced motion.</strong> There are no animations, no parallax, no auto-playing media and no carousels. The only transition on the site is a colour change on hover.</li>
-          <li><strong>No interruptions.</strong> There are no popups, no exit-intent overlays, no countdown timers, no session time limits and no content that moves or refreshes on its own.</li>
-          <li><strong>Print.</strong> Every page has a print stylesheet that drops the navigation and keeps the content readable in black on white, including the disclosures.</li>
-        </ul>
+<ul class="us-list--spaced">
+  <li><strong>Structure.</strong> Real HTML landmarks on every page, exactly one <code>h1</code>, headings that descend without skipping, and a skip link as the first thing a keyboard user reaches.</li>
+  <li><strong>Forms.</strong> Every field has a real visible label, with hints and error messages tied to their field programmatically.</li>
+  <li><strong>Keyboard and focus.</strong> Everything is reachable and operable by keyboard alone, with a thick high-contrast focus ring that is never removed. Escape closes the drawer and any dialog, and nothing traps focus.</li>
+  <li><strong>Contrast and colour.</strong> Every text and background pair is measured against the WCAG minimums, and meaning is never carried by colour alone.</li>
+  <li><strong>Zoom and reflow.</strong> Usable at 200% zoom and down to a 320px viewport with no horizontal scrolling. Wide tables scroll inside their own container.</li>
+  <li><strong>No interruptions, no motion.</strong> No animations, carousels, popups, exit-intent overlays, countdowns or session time limits.</li>
+</ul>
 
-        <h2>How we test</h2>
+<h2>How we test</h2>
 
-        <p>Before a page goes up we work through it with the keyboard alone, from the skip link to the last link in the footer. We check the heading outline, the landmark structure, and the accessible name of every control. We compute the contrast ratio of each text and background pair rather than eyeballing it. We view every page at 320px wide, at 200% zoom, and with images off. We check that the browser console is clean.</p>
+<p>Before a page goes up we work through it with the keyboard alone, check the heading outline, the landmarks and the accessible name of every control, compute each contrast ratio rather than eyeballing it, and view the page at 320px, at 200% zoom and with images off.</p>
 
-        <h2>Known limitations</h2>
+<h2>Known limitations</h2>
 
-        <p>We would rather tell you these than have you discover them.</p>
+<ul class="us-list--spaced">
+  <li><strong>The request form needs JavaScript.</strong> The callback times are worked out in your browser. With JavaScript off it will not work &mdash; the page says so and gives you the phone number and email address instead.</li>
+  <li><strong>English only.</strong> If you need this information in another language, contact us and we will arrange it.</li>
+  <li><strong>No independent audit yet.</strong> Our testing is our own.</li>
+</ul>
 
-        <ul class="us-list--spaced">
-          <li><strong>The request form needs JavaScript.</strong> The callback times are worked out in your browser, and the form is checked and sent by script, so with JavaScript turned off or blocked it will not work. The page says so where the form is, and gives you the phone number and email address instead. Call or write and we will take the same information from you directly.</li>
-          <li><strong>English only.</strong> The site is published in English. If you need this information in another language, contact us and we will arrange it.</li>
-          <li><strong>No independent audit yet.</strong> Our testing is our own. An external review has not been done.</li>
-        </ul>
-
-        <h2>Report a barrier</h2>
+<h2>Report a barrier</h2>
 
         <p>If any part of this site stops you, tell us. You do not need to know the technical reason, and you do not need to use any particular words.</p>
 

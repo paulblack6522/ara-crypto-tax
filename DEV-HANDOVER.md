@@ -12,6 +12,9 @@ Live reference build: https://paulblack6522.github.io/ara-crypto-tax/
 > request form that used to live at `lander-2.html` is now **`index.html`** — the home
 > page *is* the form. Question 5 changed from *"Do you have your transaction records?"*
 > to *"Which exchanges or wallets did you use?"*, with an **Other: please specify** box.
+> Every yellow callout was removed site-wide, the demo notices were removed, and the
+> body copy on every page was cut back by roughly 40% overall.
+> **Read §2.2a before you deploy anything.**
 > If you are looking at an older copy of this file, this one supersedes it.
 
 ---
@@ -85,8 +88,23 @@ never as the displayed local string.
 **Inline `<script>` at the bottom of the file** — the `sendBtn` click handler.
 `form.reportValidity()` runs first, then the modal opens.
 
-⚠ This modal currently says **"Nothing was sent"** because the build is a demo. Once you
-wire the endpoint, that wording becomes false — update the modal copy in the same change.
+### ⚠️ 2.2a BOTH CONFIRMATION MODALS NOW CLAIM SUCCESS — WIRE THE ENDPOINT BEFORE THIS IS PUBLIC
+
+On 2026-08-05 the client asked for the demo notices to be removed, because the build is
+reviewed behind a watermark rather than shown to the public. So:
+
+- `index.html` → **"Your callback is requested… A preparer will call you"**
+- `contact.html` → **"Thank you. We have your message and a preparer will reply"**
+
+**Neither is true until you connect a real endpoint.** Nothing is transmitted today. That is
+fine for a watermarked internal review and it is **not** fine on a live domain: a page that
+tells a taxpayer their details were received when they were not is a deceptive pattern and
+an ad-account risk.
+
+**So treat these two as blocking:** the endpoint must be live *before* the site is, and the
+modal must only open on a successful response (see the `.then(...)` / `.catch(...)` split in
+§2.1). If for any reason the site has to go public before the endpoint exists, put the
+"nothing was sent" wording back first.
 
 ### 2.3 Question 5 — "Other: please specify"
 
