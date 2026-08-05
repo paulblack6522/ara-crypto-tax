@@ -165,14 +165,34 @@ Both live in `.us-footer__legal`, at 15px, 14.9:1 contrast. Never shrink,
 grey, truncate, reword, collapse into an accordion, or move to a single
 disclosures page. Copy them from `PARTIALS.html` — do not retype them.
 
-### 3.2 Intake form, above the first field, in a visible box, verbatim
+### 3.2 ⚠ WITHDRAWN 2026-08-05 — the yellow security box
 
-**C — security line:**
+This section used to require the sentence *"We will never ask for your seed
+phrase, private keys, exchange passwords, or API keys. No one legitimate ever
+will."* in a yellow `.us-security-note` box above the first field.
 
-> We will never ask for your seed phrase, private keys, exchange passwords, or API keys. No one legitimate ever will.
+**Every yellow callout has been removed from the site at the client's
+instruction** — the `.us-security-note` boxes and the `.us-alert--warning`
+blocks, on every page. `.us-security-note` is now dead CSS; **do not reinstate
+it, and do not add a new yellow callout anywhere.** The only surviving
+`.us-alert--warning` markup is inside the two `<noscript>` fallbacks, which no
+visitor with JavaScript on ever sees.
 
-Use the `.us-security-note` component. It is the most protective sentence on
-the site; give it the box, not a footnote.
+**The substance was kept, only the box went.** The promise still appears as
+ordinary prose:
+
+- `index.html` — inside question 5's own hint: *"we never ask for a login, an
+  API key or a recovery phrase"*, plus the paragraph above the form listing
+  everything not collected.
+- `privacy.html` §3 *"What we never ask for"* — full wording, including the
+  impersonation warning.
+- `what-you-need.html` — *"We never ask for keys or passwords"* section.
+- `contact.html` — *"Do not send tax documents or account credentials by
+  email"* section.
+
+**The rule that no form may ever contain such a field is unchanged and is not
+optional** (see `PARTIALS.html` and §2.7). What changed is the styling, not the
+promise.
 
 ### 3.3 Contact details, footer of every page
 
