@@ -8,10 +8,11 @@
     * no cookies of any kind
     * no analytics, no tag manager, no pixel, no session recorder
     * no third-party requests at all (no fonts, no CDN, no maps, no chat)
-    * the intake form and the contact form send their contents NOWHERE;
+    * the request form and the contact form send their contents NOWHERE;
       they are handled entirely inside the visitor's own browser
-    * the only browser storage used is sessionStorage, on the visitor's
-      own device, for intake wizard progress, cleared when the tab closes
+    * no browser storage of any kind — no sessionStorage, no localStorage
+      (the long intake wizard that used sessionStorage was retired on
+      2026-08-05; nothing on the site writes to storage now)
 
   THE MOMENT ANY OF THE FOLLOWING IS ADDED, THIS PAGE BECOMES FALSE AND
   MUST BE REWRITTEN BEFORE THE CHANGE GOES LIVE:
@@ -131,7 +132,7 @@
         <li class="us-nav__item"><a class="us-nav__link" href="about.html">About</a></li>
         <li class="us-nav__item"><a class="us-nav__link" href="contact.html">Contact</a></li>
       </ul>
-      <a class="us-nav__cta" href="file.html">Start your filing</a>
+      <a class="us-nav__cta" href="index.html#request">Start your filing</a>
     </nav>
   </div>
 
@@ -178,8 +179,8 @@
           <li><strong>No cookies.</strong> The site sets none. There is no consent banner because there is nothing to consent to.</li>
           <li><strong>No analytics and no trackers.</strong> There is no Google Analytics, no tag manager, no advertising pixel, no heatmap tool and no session recorder anywhere on this site.</li>
           <li><strong>No third-party requests.</strong> Every stylesheet, script, font and image comes from this site itself. There are no web fonts loaded from another company, no maps, no video embeds, no chat widget and no captcha. The site works with no network connection after the page has loaded.</li>
-          <li><strong>The forms send nothing.</strong> In this build, the intake form and the contact form are handled entirely inside your own browser. Their contents are not transmitted to us or to anyone else, and they are not written to a database.</li>
-          <li><strong>Browser storage.</strong> The intake form keeps your progress through the five steps in <code>sessionStorage</code>, which lives on your own device only. It is never sent anywhere. Your browser clears it when you close the tab.</li>
+          <li><strong>The forms send nothing.</strong> In this build, the request form and the contact form are handled entirely inside your own browser. Their contents are not transmitted to us or to anyone else, and they are not written to a database.</li>
+          <li><strong>No browser storage.</strong> The site writes nothing to <code>sessionStorage</code> or <code>localStorage</code>. What you type into a form stays in the page you are looking at, and is gone when you close or reload it.</li>
           <li><strong>No fingerprinting.</strong> We do not build a device or browser profile, and we do not attempt to identify you across sites.</li>
         </ul>
 
@@ -200,16 +201,16 @@
 
         <h2>4. Information you choose to give us</h2>
 
-        <p>If you use the intake form or the contact form, the fields ask for:</p>
+        <p>If you use the request form or the contact form, the fields ask for:</p>
 
         <ul class="us-list--spaced">
           <li>Your name, your email address, and a phone number if you choose to give one.</li>
           <li>Which tax years you are asking about and what you want done, such as a full return, a calculation, an amendment or a review.</li>
-          <li>Scope information about your cryptocurrency activity: how many exchanges and wallets are involved and which ones by name, which kinds of activity happened during the year, and broad bands for transaction counts, disposals, proceeds and portfolio size.</li>
-          <li>What records you can provide, what you filed in prior years, and how you would like us to reply.</li>
+          <li>Scope information about your cryptocurrency activity: how many exchanges and wallets are involved and which ones by name, which kinds of activity happened during the year, and a broad band for the number of transactions.</li>
+          <li>What you filed in prior years, how you would like us to reply, and a time that suits you for a preparer to call.</li>
         </ul>
 
-        <p>We ask for bands rather than exact figures wherever a band is enough to scope the work. The exchange names field asks for names only, and the records field asks for public wallet addresses and read-only exports only. Please keep it to that.</p>
+        <p>We ask for bands rather than exact figures wherever a band is enough to scope the work. <strong>The exchange and wallet question asks for names only.</strong> It does not ask what you hold on them, what any of it is worth, or for a login, an API key or a recovery phrase &mdash; and it never will. We ask which platforms you used because that is what tells a preparer which records exist and in what format.</p>
 
         <p>We use what you send us to answer your question, to work out what the job involves, and to send you a written quote. We do not use it for advertising, we do not build a profile from it, and we do not add you to a marketing list you did not ask for.</p>
 
@@ -360,7 +361,7 @@
           <li><a href="how-it-works.html">How it works</a></li>
           <li><a href="what-you-need.html">What we need from you</a></li>
           <li><a href="forms.html">IRS forms &amp; reporting</a></li>
-          <li><a href="file.html">Start your filing</a></li>
+          <li><a href="index.html#request">Start your filing</a></li>
         </ul>
       </div>
 

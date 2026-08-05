@@ -184,15 +184,33 @@ hover or a click. Use these placeholder details consistently everywhere; the
 phone is in the reserved 555-01xx range and the email domain is deliberately
 not real, because this is a sample build.
 
-### 3.4 Helper text required on two intake fields
+### 3.4 Helper text required on the exchanges/wallets question
 
-- Exchange names field: *"Names only. Do not enter logins, passwords, API keys
-  or account numbers."*
-- Records field: *"Public wallet addresses and read-only CSV exports only."*
+The question that asks **which** exchanges and wallets were used must carry, in
+its hint, that we ask for **names only** and that we never ask for a login, an
+API key or a recovery phrase. The live wording on `index.html` is:
+
+> *"Tick all that apply, across every year. This tells a preparer which records
+> exist and in what format. We do not ask what you hold on them, and we never
+> ask for a login, an API key or a recovery phrase."*
+
+The free-text box behind **"Other: please specify"** must say *names only* too.
+Asking which platform is scoping. Asking what sits on it is a holdings harvest,
+which is what the impersonation lander we declined on 2026-08-01 was built to do
+— see the project `CLAUDE.md`. That line does not move.
 
 ---
 
-## 4. The intake wizard — five steps, fixed
+## 4. The intake wizard — RETIRED 2026-08-05
+
+> **This section no longer describes anything that is built.** The five-step
+> wizard (`file.html`, `assets/js/wizard.js`) was deleted at the client's
+> instruction, and the short request form — six questions plus a callback
+> booking, formerly `lander-2.html` — became `index.html`. Kept as research;
+> see the live field table in `FACTS.md` §8. Do not build to the spec below
+> without checking with the client first.
+
+## 4a. The retired wizard — five steps, fixed
 
 Every builder must use these five step names, in this order, with this
 numbering. They appear in the `.us-step-indicator`, in each step's `<legend>`,

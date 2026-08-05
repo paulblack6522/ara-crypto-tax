@@ -7,13 +7,20 @@ Deploy = copy these files to the web root. Nothing to compile.
 
 Live reference build: https://paulblack6522.github.io/ara-crypto-tax/
 
+> **Changed 2026-08-05.** The long five-step intake wizard (`file.html`) and its script
+> (`assets/js/wizard.js`) were **deleted** at the client's instruction. The short
+> request form that used to live at `lander-2.html` is now **`index.html`** — the home
+> page *is* the form. Question 5 changed from *"Do you have your transaction records?"*
+> to *"Which exchanges or wallets did you use?"*, with an **Other: please specify** box.
+> If you are looking at an older copy of this file, this one supersedes it.
+
 ---
 
 ## 1. What you need to do
 
 | # | Job | Files |
 |---|---|---|
-| 1 | Wire the **3 forms** to a real endpoint (POST + email) | `assets/js/wizard.js`, `assets/js/lander2.js`, `contact.html` |
+| 1 | Wire the **2 forms** to a real endpoint (POST + email) | `assets/js/lander2.js`, `contact.html` |
 | 2 | Wire **"Call me now"** to real telephony (or remove it) | `assets/js/lander2.js` |
 | 3 | **Update `privacy.html` BEFORE the forms go live** | `privacy.html` |
 | 4 | Swap **placeholder phone / email / address** | all pages |
@@ -23,82 +30,88 @@ Details for each are below.
 
 ---
 
-## 2. The three forms — exact hook points
+## 2. The two forms — exact hook points
 
-All three send **nothing** today. Each one has the same deliberate guard, and **the guard
-must stay**: the send control is `type="button"` (not `submit`), the `<form>` carries
+Both send **nothing** today. Each has the same deliberate guard, and **the guard must
+stay**: the send control is `type="button"` (not `submit`), the `<form>` carries
 `onsubmit="return false"`, and there is a `<noscript>` fallback. That combination means
 there is no native browser submission even with JavaScript disabled — without it, a
 JS-disabled browser does a native `GET` and puts the taxpayer's **name, email and phone
 into the URL query string**, into server logs, browser history and the outbound `Referer`.
 That exact bug was found and fixed in QA. Do not undo it.
 
-### 2.1 Intake wizard — `file.html`
+> The file is still called `lander2.js` after the rename to `index.html`. Renaming it is
+> safe if you prefer — it is referenced once, in `index.html`'s `<head>`.
 
-**File:** `assets/js/wizard.js`
-**Line ~616** — `form.addEventListener('submit', …)`, under a comment block that begins
-`DEMO BUILD — THIS HANDLER SENDS NOTHING.`
-
-Validation for all 5 steps runs first; the send point is after `if (firstBad) { … return; }`.
-Replace the two lines `clearSaved(); show(confirmation); openConfirmation();` with your
-POST, and call them on success.
-
-```js
-// after validation passes:
-fetch('/api/intake', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': token },
-  body: JSON.stringify(payload)
-}).then(function (r) {
-  if (!r.ok) { throw new Error('bad status'); }
-  clearSaved();            // keep — wipes sessionStorage
-  show(confirmation);
-  openConfirmation();      // keep — accessible modal, focus-trapped
-}).catch(function () {
-  /* show an inline error. Do NOT clearSaved() on failure —
-     the visitor loses 5 steps of answers. */
-});
-```
-
-⚠ `clearSaved()` deletes the visitor's saved progress from `sessionStorage`. Only call it
-**after** the server has confirmed receipt.
-
-### 2.2 Paid-traffic lander — `lander-2.html`
+### 2.1 Request form — `index.html` (the home page)
 
 **File:** `assets/js/lander2.js`
-**Line ~370** — `function submit()`. Same pattern: `validateAll()` runs first, then POST,
-then `window.AraSite.openModal('callback-confirm')` on success.
+**`function submit()`** — search for `/* 3. Scheduled submit — demo only`.
 
-The callback slot fields are `callback_slot` (a chosen slot), or `callback_date` +
-`callback_time` when the visitor picks "Another time", plus `timezone`.
+`validateAll()` runs first; replace the modal call with your POST and open the modal on
+success.
 
-⚠ **The slots are anchored to the FIRM's hours — Mon–Fri 09:00–17:00 America/Los_Angeles** —
-and re-labelled into the US timezone the visitor selects. The underlying appointment instant
-does not move when they change the selector. When you store a booking, **store it as a UTC
-instant**, not as the displayed local string.
+```js
+function submit() {
+  if (!validateAll()) { return; }
+  fetch('/api/request', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': token },
+    body: JSON.stringify(payload)
+  }).then(function (r) {
+    if (!r.ok) { throw new Error('bad status'); }
+    var when = $('[data-confirm-when]');
+    if (when) { when.textContent = chosenWhen(); }
+    window.AraSite.openModal('callback-confirm');   // keep — accessible, focus-trapped
+  }).catch(function () {
+    /* show an inline error. Do not clear the form. */
+  });
+}
+```
+
+**Callback slot fields:** `callback_slot` (a chosen slot, value = an ISO instant), or
+`callback_date` + `callback_time` when the visitor picks "Another time", plus `timezone`.
+
+⚠ **The slots are anchored to the FIRM's hours — Mon–Fri 09:00–17:00 America/Los_Angeles**
+— and re-labelled into the US timezone the visitor selects. The underlying appointment
+instant does not move when they change the selector. **Store the booking as a UTC instant**,
+never as the displayed local string.
 
 ⚠ **Timezone is chosen by the visitor, never auto-detected.** Do not add
 `Intl.DateTimeFormat().resolvedOptions().timeZone`. This is a client rule, not a preference.
 
-### 2.3 Contact form — `contact.html`
+### 2.2 Contact form — `contact.html`
 
-**Inline `<script>` at the bottom of the file, line ~347** — the `sendBtn` click handler.
+**Inline `<script>` at the bottom of the file** — the `sendBtn` click handler.
 `form.reportValidity()` runs first, then the modal opens.
 
-⚠ This modal currently says **"Nothing was sent"** because the build is a demo. Once you wire
-the endpoint, that wording becomes false — update the modal copy on `contact.html` in the
-same change.
+⚠ This modal currently says **"Nothing was sent"** because the build is a demo. Once you
+wire the endpoint, that wording becomes false — update the modal copy in the same change.
+
+### 2.3 Question 5 — "Other: please specify"
+
+Question 5 asks **which** exchanges and wallets were used. Seven named tickboxes, then a
+last option **"Other: please specify"** which reveals a free-text box.
+
+- Checkboxes post as `venues` (repeated); the free-text box posts as `venues_other`.
+- The reveal lives in `initVenueOther()` in `assets/js/lander2.js`. Unticking "Other"
+  **clears** the text, so a stale value can never be submitted.
+- Validation is in `problemWith()`, under `if (name === 'venues')`: at least one tickbox,
+  and if "Other" is ticked the box has to be filled in.
+- Serialize `venues` as an **array**. If "other" is among the values, `venues_other` holds
+  what they typed.
+
+⚠ **This question asks for platform names only.** It must never grow a field for what is
+held there, what it is worth, a login, an API key or a recovery phrase. See §6.
 
 ### 2.4 Fields each form posts
 
 Read them off the `name` attributes; nothing is renamed in JS.
 
 - **`contact.html`** — `name`, `email`, `phone`, `message`, `consent`
-- **`lander-2.html`** — `full_name`, `email`, `phone`, `contact_method`, `tax_years`,
-  `activities`, `tx_volume`, `venue_count`, `records`, `prior_reporting`, `timezone`,
-  `callback_slot` / `callback_date` + `callback_time`, `consent`
-- **`file.html`** — ~55 fields across the 5 steps (filing basics, jurisdictions, activity
-  types, records/prior filings, contact). Serialize the whole form; do not hand-pick.
+- **`index.html`** — `tax_years`, `activities`, `tx_volume`, `venue_count`, `venues`,
+  `venues_other`, `prior_reporting`, `full_name`, `email`, `phone`, `contact_method`,
+  `timezone`, `callback_slot` / `callback_date` + `callback_time`, `consent`
 
 ---
 
@@ -118,18 +131,18 @@ This is **tax return information**. Treat it as such from the first keystroke.
    (a honeypot field and a timing check work and add no external requests — see §7).
 5. **Never add a field that collects:** Social Security number, ITIN, EIN, date of birth,
    seed or recovery phrase, private key, exchange password, exchange API key or secret,
-   bank/routing number, card details, or a file upload. Not optionally, not behind a "you
-   can skip this". The site tells visitors in a visible box that no one legitimate will ask
-   for their seed phrase — adding any of these breaks that promise and the compliance
-   posture the whole build rests on.
+   bank or routing number, card details, a wallet balance or holdings value, or a file
+   upload. Not optionally, not behind a "you can skip this". The site states in the
+   paragraph above the form that none of these are asked for, and question 5's own hint
+   promises we never ask for a login, an API key or a recovery phrase.
 
 ---
 
-## 4. "Call me now" (`lander-2.html`)
+## 4. "Call me now" (`index.html`)
 
-`initCallNow()` in `assets/js/lander2.js`, **line ~390**. Today it validates the contact
-details, shows an "assigning a preparer" overlay, and after 3.5s resolves to a plain
-confirmation that a preparer will call the number given.
+`initCallNow()` in `assets/js/lander2.js`. Today it validates the contact details, shows an
+"assigning a preparer" overlay, and after 3.5s resolves to a plain confirmation that a
+preparer will call the number given.
 
 **It is a placeholder for real telephony / click-to-call. No call is placed.**
 
@@ -147,13 +160,18 @@ years". See §6.
 ## 5. `privacy.html` — edit this FIRST
 
 `privacy.html` currently states, **truthfully**, that the site sets no cookies, runs no
-analytics, and transmits nothing anywhere. There is a visible comment at the top of the file
-saying so.
+analytics, writes nothing to browser storage, and transmits nothing anywhere. There is a
+visible comment at the top of the file saying so.
 
-The moment you add a form endpoint — or analytics, or a tag manager, or a chat widget — that
-page becomes false. **Update it in the same commit as the endpoint, not after.** It has a
-real CCPA/CPRA section that needs the new data flow described: what is collected, where it
-is sent, who processes it, how long it is kept.
+The moment you add a form endpoint — or analytics, or a tag manager, or a chat widget, or
+anything that writes to `sessionStorage`/`localStorage` — that page becomes false.
+**Update it in the same commit as the endpoint, not after.** It has a real CCPA/CPRA
+section that needs the new data flow described: what is collected, where it is sent, who
+processes it, how long it is kept.
+
+> The storage claim changed on 2026-08-05: deleting the wizard removed the only
+> `sessionStorage` use on the site, so the page now says there is none. If you add any,
+> that line goes back.
 
 Same for `terms.html` if you change what the service does.
 
@@ -179,7 +197,10 @@ preparers. The client will run Google Ads to this site; breaking one risks the a
 - Turnaround or response-time promises ("within one business day"). No staffing basis exists
   for an SLA; an unsubstantiated service claim is Google Ads Misrepresentation.
 - Prices, `priceRange` in the JSON-LD, struck-through anchors, countdowns, fake scarcity.
-- Investment or trading content, or exchange links presented as recommendations.
+- Investment or trading content, or exchange links presented as recommendations. **The
+  exchange names in question 5 are a plain tickbox list of platforms the visitor may have
+  used — no logos, no brand marks, no ranking, no recommendation, and no implication that
+  any of those companies is a partner. Keep it that way.**
 
 **Always keep, verbatim, in the footer of every page — including any new page you add:**
 1. the **non-affiliation** statement ("We are not the IRS…"), and
@@ -192,7 +213,8 @@ services** policy. It costs a little conversion and it is **not optional**.
 **No tax claim goes on a page unless a line in `_system/FACTS.md` supports it.** That file is
 the researched, IRS-sourced set of statements this site is allowed to make.
 `_system/COPY-RULES.md` and `_system/PARTIALS.html` hold the copy rules and the shared
-header/footer/modal markup.
+header/footer/modal markup. (Both carry a RETIRED banner over the sections that described
+the deleted wizard — the research is kept, the spec no longer applies.)
 
 ---
 
@@ -226,33 +248,30 @@ business name cannot get indexed and later compete with their live site.
    `hello@aratax-example.com`, and "San Ramon, California" with no street address. **Google
    Ads requires a real, reachable phone number and address at launch.**
 5. Publish real opening hours, or remove the Hours card on `contact.html`. The callback
-   scheduler in `lander-2.html` assumes **Mon–Fri 09:00–17:00 Pacific** — if the firm's real
-   hours differ, change them in `assets/js/lander2.js` and keep the two consistent.
+   scheduler on `index.html` assumes **Mon–Fri 09:00–17:00 Pacific** — if the firm's real
+   hours differ, change `FIRM_TZ` and `isFirmHour()` in `assets/js/lander2.js` and keep the
+   two consistent.
 
 ---
 
-## 9. Two funnels — don't retire one by accident
+## 9. One funnel
 
-- **`lander-2.html`** — short: six qualifying questions + contact + callback booking. This is
-  the **paid-traffic destination**. Its header CTA is an in-page `#request` anchor.
-- **`file.html`** — the detailed self-serve 5-step wizard, for visitors who prefer to fill
-  everything in themselves. The other pages' header CTA points here.
+Every "Start your filing" / "Request a callback" button on the site now points at
+**`index.html#request`** — the request form on the home page. There is no second form path.
 
-Both are intentionally live. Compare them on real numbers before dropping either.
-
-⚠ **Wizard validation is per-step via `data-required` on the field *group*, not `required` on
+⚠ **Validation is per-question via `data-required` on the field *group*, not `required` on
 the individual input.** Remember this when you test — a group of checkboxes is validated as a
-group. Grep `data-required` before you change any validation logic.
+group, by `problemWith()` in `lander2.js`. Grep `data-required` before you change any
+validation logic.
 
 ---
 
 ## 10. Accessibility — verified, please don't regress
 
-Driven in a real browser (Chromium/Playwright), not by inspection: 21/21 functional and
-accessibility checks pass. WCAG AA contrast across every page **with ancestor `opacity`
-compounded**; focus ring clears 3:1 on every surface; all controls ≥ 44×44 px; no horizontal
-overflow at 360 px; zero console errors; modal focus-trapped with Escape and focus return;
-nav drawer uses `inert` + Tab wrap + scroll lock.
+Driven in a real browser (Chromium/Playwright), not by inspection. WCAG AA contrast across
+every page **with ancestor `opacity` compounded**; focus ring clears 3:1 on every surface;
+all controls ≥ 44×44 px; no horizontal overflow at 360 px; zero console errors; modal
+focus-trapped with Escape and focus return; nav drawer uses `inert` + Tab wrap + scroll lock.
 
 Known trap in this CSS: a broad `a` colour rule once painted navy text on the navy CTA
 button (1.0:1, invisible). It is fixed with `:not(.us-button)` — **if you add a link rule,
@@ -266,9 +285,8 @@ disabled** after any form change.
 ## 11. File map
 
 ```
-index.html            Home
-lander-2.html         Short qualifying form + callback booking (paid-traffic destination)
-file.html             5-step intake wizard
+index.html            HOME — and the request form itself (#request).
+                      Six questions + contact + callback booking.
 how-it-works.html     The engagement, step by step
 what-you-need.html    Document checklist
 forms.html            Guide to the IRS forms a crypto return involves
@@ -285,21 +303,27 @@ ads.html              Internal: the Google Ads campaign build sheet (noindex, no
 
 assets/css/site.css   All styles (USWDS-derived, public domain)
 assets/js/site.js     Shared: nav drawer, modals, focus management
-assets/js/wizard.js   file.html — 5-step wizard  ← FORM HOOK ~line 616
-assets/js/lander2.js  lander-2.html — qualifying form, scheduler, call-now
-                                              ← FORM HOOK ~line 370, call-now ~line 390
+assets/js/lander2.js  index.html — the request form, the "Other: please specify" reveal,
+                      the callback scheduler and "Call me now"
+                          ← FORM HOOK: function submit()
+                          ← call-now: initCallNow()
 assets/img/           Wordmark + favicon (SVG)
 favicon.ico  apple-touch-icon.png
 robots.txt  sitemap.xml  sitemap.xsl  llms.txt
 
-_system/FACTS.md      IRS-sourced statements the site may make + the intake field list
-_system/COPY-RULES.md Copy rules
+_system/FACTS.md      IRS-sourced statements the site may make; §8 has the LIVE field
+                      table, above the retired wizard's field list
+_system/COPY-RULES.md Copy rules (§4 = retired wizard spec, kept as research)
 _system/PARTIALS.html Shared header / footer / modal markup
 README.md             Fuller background on the build
 ```
 
 `_system/` is documentation for whoever edits the copy — it is not served content and can be
 left out of the production web root if you prefer.
+
+**Deleted on 2026-08-05:** `file.html` and `assets/js/wizard.js` (the five-step intake
+wizard), and the previous marketing home page. They are in the repository history if anyone
+needs them back.
 
 ---
 

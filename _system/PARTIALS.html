@@ -134,7 +134,8 @@ SETTING THE ACTIVE NAV ITEM
     faq.html            -> <a class="us-nav__link" href="faq.html" aria-current="page">FAQ</a>
     about.html          -> <a class="us-nav__link" href="about.html" aria-current="page">About</a>
     contact.html        -> <a class="us-nav__link" href="contact.html" aria-current="page">Contact</a>
-    file.html           -> no nav item is current; the CTA is the destination.
+    index.html (the request form) -> Home is current; the CTA is an in-page
+                                   #request anchor, not a page link.
     privacy / terms / accessibility -> no nav item is current.
   The stylesheet draws the 4px underline bar from the aria-current
   attribute itself, so there is no extra class to add.
@@ -171,7 +172,8 @@ SETTING THE ACTIVE NAV ITEM
         <li class="us-nav__item"><a class="us-nav__link" href="about.html">About</a></li>
         <li class="us-nav__item"><a class="us-nav__link" href="contact.html">Contact</a></li>
       </ul>
-      <a class="us-nav__cta" href="file.html">Start your filing</a>
+      <a class="us-nav__cta" href="index.html#request">Start your filing</a>
+      <!-- On index.html itself this is href="#request" and reads "Request a callback". -->
     </nav>
   </div>
 
@@ -250,7 +252,7 @@ accordion, or onto a single "disclosures" page.
           <li><a href="how-it-works.html">How it works</a></li>
           <li><a href="what-you-need.html">What we need from you</a></li>
           <li><a href="forms.html">IRS forms &amp; reporting</a></li>
-          <li><a href="file.html">Start your filing</a></li>
+          <li><a href="index.html#request">Start your filing</a></li>
         </ul>
       </div>
 
@@ -325,19 +327,23 @@ WHY EACH PIECE IS THERE
 
 
 ======================================================================
-===== [BONUS] SECURITY NOTICE FOR THE INTAKE FORM ====================
+===== [BONUS] WHAT THE REQUEST FORM MUST NEVER COLLECT ===============
 ======================================================================
-Required on file.html, in a visible box, ABOVE the first field of step 1.
-Verbatim, no edits:
+The "Before you start" security note was REMOVED on 2026-08-05 at the
+client's instruction, along with the long intake wizard it sat on. Do
+not reinstate it. The page still states, in the paragraph above the
+form, that no SSN, date of birth, bank account, card number, wallet
+balance or upload is asked for, and the exchanges/wallets question says
+in its own hint that we never ask for a login, an API key or a recovery
+phrase.
 
-  <div class="us-security-note">
-    <p class="us-security-note__heading">Before you start</p>
-    <p>We will never ask for your seed phrase, private keys, exchange passwords, or API keys. No one legitimate ever will.</p>
-  </div>
-
-The intake form also must not contain a field for: Social Security
-number, ITIN, EIN, date of birth, seed or recovery phrase, private key,
+The rule the note used to carry is unchanged and is NOT optional. No
+form on this site may contain a field for: Social Security number,
+ITIN, EIN, date of birth, seed or recovery phrase, private key,
 exchange password, exchange API key or secret, bank account or routing
 number, card number, driver's licence, passport, or a document upload.
 Not as an optional field. Not with a "you can skip this" note.
+
+Question 5 asks WHICH exchanges and wallets were used, by name only. It
+must never ask what is held on them or what it is worth.
 ======================================================================

@@ -557,8 +557,31 @@ ban in `COPY-RULES.md` §2.4.
 
 ## 8. Intake field list
 
-Five steps, fixed order, fixed names. Full field list for the builder of
-`file.html`. **No SSN, no ITIN, no EIN, no date of birth, no seed phrase, no
+> ### ⚠ RETIRED 2026-08-05 — kept as research, not as a build spec
+>
+> The long five-step wizard (`file.html` + `assets/js/wizard.js`) was **deleted**
+> at the client's instruction. The site now has **one** form: the six-question
+> request form on `index.html`, which was `lander-2.html`. The field list below
+> is no longer what is built. It is kept because it is researched scoping work —
+> if a longer form is ever wanted again, start here rather than from scratch.
+>
+> **What is live now (`index.html`, `#request`):**
+>
+> | # | Question | `name` |
+> |---|---|---|
+> | 1 | Which tax year or years | `tax_years` |
+> | 2 | What kinds of activity | `activities` |
+> | 3 | Roughly how many transactions (band) | `tx_volume` |
+> | 4 | How many exchanges and wallets (band) | `venue_count` |
+> | 5 | **Which exchanges or wallets, by name** (+ `Other: please specify`) | `venues`, `venues_other` |
+> | 6 | Reported crypto on a past return | `prior_reporting` |
+> | — | Contact + callback | `full_name`, `email`, `phone`, `contact_method`, `timezone`, `callback_slot` / `callback_date` + `callback_time`, `consent` |
+>
+> Question 5 replaced *"Do you have your transaction records?"* on 2026-08-05.
+> It asks **which platforms, by name, only** — never what is held on them, what
+> it is worth, a login, an API key or a recovery phrase.
+
+**No SSN, no ITIN, no EIN, no date of birth, no seed phrase, no
 private key, no password, no API key, no bank or card details, no document
 upload** — none of the fields below collect any of those, and none may be
 added. Bands are used wherever a band is enough to scope the work.

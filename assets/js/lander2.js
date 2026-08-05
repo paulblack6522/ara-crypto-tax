@@ -1,8 +1,9 @@
 /* ==========================================================================
    Ara Tax Services LLC — lander2.js
    --------------------------------------------------------------------------
-   The short qualifying form + callback booking on lander-2.html. Loaded only
-   by that page.
+   The short qualifying form + callback booking on index.html. Loaded only by
+   that page. (It was lander-2.html until 2026-08-05, when the long intake
+   wizard was retired and this lander became the home page.)
 
    Vanilla JavaScript. No dependencies, no network requests, no analytics, no
    trackers, no cookies. Nothing in this file sends anything anywhere.
@@ -14,6 +15,8 @@
                              firm's business hours (Mon-Fri, 09:00-17:00 Pacific)
                              and shown in the zone the visitor picked.
      3. "Another time"     — reveals a native date + time when chosen.
+     3b. "Other: please specify" on the exchanges/wallets question — reveals a
+                             free-text box, required while it is ticked.
      4. "Call me now"      — an immediate-callback request: a green "assigning a
                              preparer" waiting overlay that resolves to a plain
                              confirmation. It does NOT place a live call in the
@@ -200,7 +203,35 @@
 
 
   /* ---------------------------------------------------------------------- */
-  /* 2. Validation (same contract as the intake form)                        */
+  /* 1b. "Other: please specify" on the exchanges / wallets question          */
+  /* ---------------------------------------------------------------------- */
+  /* Ticking the last option reveals a free-text box, the same way "Another
+     time" reveals a date and time. The box is only required while the option
+     is ticked; unticking it clears the text so a stale value cannot be sent. */
+
+  function initVenueOther() {
+    var box = $('[data-venue-other]', form);
+    var panel = $('[data-venue-otherpanel]', form);
+    var text = $('[data-venue-othertext]', form);
+    if (!box || !panel) { return; }
+
+    function sync(focusIt) {
+      if (box.checked) {
+        panel.removeAttribute('hidden');
+        if (focusIt && text) { text.focus(); }
+      } else {
+        panel.setAttribute('hidden', '');
+        if (text) { text.value = ''; }
+      }
+    }
+
+    box.addEventListener('change', function () { sync(true); });
+    sync(false);   /* respects a value restored by the browser on a back/refresh */
+  }
+
+
+  /* ---------------------------------------------------------------------- */
+  /* 2. Validation                                                           */
   /* ---------------------------------------------------------------------- */
 
   var errorSeq = 0;
@@ -257,7 +288,11 @@
       first.classList.add(first.tagName === 'TEXTAREA' ? 'us-textarea--error' : 'us-input--error');
       describedBy(first, id, true);
     }
-    return controls.length ? controls[0] : null;
+    /* A group may name the control that should take focus for this particular
+       error (see the "Other: please specify" case). Otherwise it is the first. */
+    var focusSel = group.getAttribute('data-error-focus');
+    var preferred = focusSel ? $(focusSel, group) : null;
+    return preferred || (controls.length ? controls[0] : null);
   }
 
   function problemWith(group) {
@@ -267,6 +302,23 @@
     var controls = controlsOf(group);
     if (!controls.length) { return null; }
     var first = controls[0];
+
+    /* At least one venue ticked; and if "Other" is ticked, it has to be named.
+       Checked before the generic choice branch, because this group mixes
+       checkboxes with a text input. */
+    if (name === 'venues') {
+      group.removeAttribute('data-error-focus');
+      var ticked = $all('input[name="venues"]', group).filter(function (c) { return c.checked; });
+      if (!ticked.length) { return message; }
+      var otherBox = $('[data-venue-other]', group);
+      var otherText = $('[data-venue-othertext]', group);
+      if (otherBox && otherBox.checked && (!otherText || !(otherText.value || '').trim())) {
+        /* Send focus to the box they have to fill in, not back to the first tickbox. */
+        group.setAttribute('data-error-focus', '[data-venue-othertext]');
+        return 'Name the other exchange or wallet, or untick Other.';
+      }
+      return null;
+    }
 
     if (name === 'callback_slot') {
       var chosen = $all('input[name="callback_slot"]', group).filter(function (r) { return r.checked; })[0];
@@ -438,5 +490,6 @@
   form.addEventListener('submit', function (event) { event.preventDefault(); });
 
   initSlots();
+  initVenueOther();
   initCallNow();
 }());

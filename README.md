@@ -9,10 +9,17 @@ Open `index.html` in a browser and it works.
 
 ## What this is
 
-A 12-page site for filing US federal tax reporting on cryptocurrency activity, with a
-5-step intake wizard. The visual language is the **U.S. Web Design System**, which is in
-the public domain — that is what gives federal sites their plain, boxy, high-contrast
-look, and it is legitimately usable by a private firm.
+A site about filing US federal tax reporting on cryptocurrency activity. The home page
+**is** the request form: six short questions about the shape of your activity, then a
+time for a preparer to call you. The visual language is the **U.S. Web Design System**,
+which is in the public domain — that is what gives federal sites their plain, boxy,
+high-contrast look, and it is legitimately usable by a private firm.
+
+> **Changed 2026-08-05.** The long five-step intake wizard (`file.html` +
+> `assets/js/wizard.js`) was deleted at the client's instruction, and the short
+> qualifying form that lived at `lander-2.html` became `index.html`. Question 5 changed
+> from *"Do you have your transaction records?"* to *"Which exchanges or wallets did you
+> use?"*, with an **Other: please specify** box.
 
 Every element that would imply government affiliation has been deliberately left out:
 no `.gov` banner, no "official website of the United States government" line, no flag,
@@ -22,10 +29,9 @@ no seal, no eagle-and-scales, and no "IRS" in the brand, wordmark, title or doma
 
 | File | Purpose |
 |---|---|
-| `index.html` | Home |
-| `lander-2.html` | Short qualifying form + callback booking (paid-traffic destination) |
-| `file.html` | The 5-step intake wizard (self-serve, detailed) |
+| `index.html` | **Home + the request form** — six questions, contact, callback booking |
 | `how-it-works.html` | The engagement, step by step |
+| `forms.html` | Guide to the IRS forms a crypto return involves |
 | `what-you-need.html` | Document checklist |
 | `faq.html` | 16 questions, accordion |
 | `about.html` | Who we are, and what we are not |
@@ -39,17 +45,25 @@ should be added to any page unless it is supported by a line in `FACTS.md`.**
 
 ---
 
-## Two funnels
+## One funnel — the request form on `index.html`
 
-- **`lander-2.html`** is the short, high-conversion path built for Google Ads: six
-  qualifying questions + contact + a **callback booking**, then a confirmation. It asks
-  only what predicts the fee and flags a lead — it does **not** ask for wallet balances,
-  a list of specific exchanges, or holdings values. Point paid traffic here.
-- **`file.html`** is the detailed self-serve 5-step wizard, kept for anyone who prefers to
-  fill everything in themselves. Both are live; compare them on real numbers before
-  retiring either.
+Six qualifying questions + contact + a **callback booking**, then a confirmation. It asks
+only what predicts the fee and flags a lead. Every "Start your filing" button on the site
+points at `index.html#request`; paid traffic lands on the same page.
 
-### The callback picker (`lander-2.html`)
+The six: the tax years · the kinds of activity · roughly how many transactions · how many
+exchanges and wallets · **which exchanges and wallets, by name** · what was reported in
+prior years.
+
+⚠ Question 5 asks **which platforms, by name only**. It does **not** ask for wallet
+balances, holdings values, a login, an API key or a recovery phrase, and it must never be
+extended to. Asking which platform is scoping — a preparer has to know which records exist
+and in what format. Asking what sits on it is a holdings harvest, which is precisely the
+structure of the impersonation lander that was declined on 2026-08-01 (see the project
+`CLAUDE.md`). The named options are plain text tickboxes: no logos, no brand marks, no
+ranking, no implied partnership.
+
+### The callback picker
 
 Five "next available" slots are generated in the browser, anchored to the **firm's**
 business hours (Mon–Fri, 09:00–17:00 America/Los_Angeles) so a booked call never lands
@@ -62,7 +76,7 @@ echoes the chosen time back. Times roll past weekends automatically.
 same slots into that zone (the underlying appointment instants do not move). This is a
 deliberate rule; do not add browser timezone detection.
 
-### "Call me now" (`lander-2.html`)
+### "Call me now"
 
 An immediate-callback request beside the scheduler: it validates the contact details (not
 the slot), then shows a green "assigning a preparer" overlay with a spinner, which after a
@@ -74,26 +88,28 @@ connected state from the telephony provider. The staff are called "preparers", n
 
 ## The forms send nothing
 
-Both forms are demonstration only. There is no `action`, no `method`, no `fetch`, and
-`onsubmit` is blocked, so **no native submission path exists even with JavaScript
-disabled**. Nothing is transmitted and nothing is stored server-side. Wizard progress
-is kept in `sessionStorage` on the visitor's own device and cleared on submit.
+Both forms — the request form and the contact form — are demonstration only. There is no
+`action`, no `method`, no `fetch`, and `onsubmit` is blocked, so **no native submission
+path exists even with JavaScript disabled**. Nothing is transmitted, nothing is stored
+server-side, and since the wizard was deleted the site writes nothing to `sessionStorage`
+or `localStorage` either.
 
 This is deliberate: no real taxpayer's details should land in an inbox before the
 client has approved how that data is handled.
 
 ### Wiring the form up for real
 
-1. Replace the submit handler in `assets/js/wizard.js` (marked with a comment) with a
-   `POST` to the firm's own server, over HTTPS. Do the same in `assets/js/lander2.js`
-   (the `submit()` function) and at the bottom of `contact.html`.
-2. All three carry the same guard: `type="button"` send, `onsubmit="return false"`, and a
+**See `DEV-HANDOVER.md` — it is the full brief for this, with the hook points.** In short:
+
+1. Replace the body of `submit()` in `assets/js/lander2.js` with a `POST` to the firm's own
+   server over HTTPS, and do the same in the inline script at the bottom of `contact.html`.
+2. Both carry the same guard: `type="button"` send, `onsubmit="return false"`, and a
    `<noscript>` fallback — so there is no native submission path even with JS off. Keep it.
 3. **Do not log the payload.**
 4. **Update `privacy.html` first.** It currently states — truthfully — that the site
-   sets no cookies, runs no analytics, and transmits nothing. Adding an endpoint or
-   analytics makes that page false. There is a visible comment at the top of the file
-   saying so.
+   sets no cookies, runs no analytics, writes nothing to browser storage, and transmits
+   nothing. Adding an endpoint or analytics makes that page false. There is a visible
+   comment at the top of the file saying so.
 
 ---
 
@@ -154,16 +170,17 @@ official services** policy. It costs a little conversion and it is not optional.
 
 Driven in a real browser (Chromium, Playwright), not by inspection:
 
-- 21/21 functional and accessibility checks pass
-- All 5 wizard steps walk end to end; per-step validation blocks an empty required group
+- All six questions validate; an empty required group is blocked and announced
+- **"Other: please specify" reveals its box, is required while ticked, and clears when
+  unticked** — so a stale value cannot be submitted
 - Submit fires `preventDefault`, opens an accessible modal (focus trapped, Escape
-  closes, focus returns), clears `sessionStorage` — **zero network requests leave the page**
+  closes, focus returns) — **zero network requests leave the page**
 - No native submit path with JavaScript disabled, on either form
-- WCAG AA contrast across all 12 pages, with ancestor `opacity` compounded
+- WCAG AA contrast across every page, with ancestor `opacity` compounded
 - Focus ring clears 3:1 on every surface (two-tone: blue ring + white halo)
 - All controls ≥ 44×44 px
 - No horizontal overflow at 360 px · zero console errors · zero external requests
-- Both mandatory disclosures present on all 12 pages; no banned term; valid JSON-LD
+- Both mandatory disclosures present on every page; no banned term; valid JSON-LD
   with no review or price markup
 
 ---

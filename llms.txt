@@ -15,8 +15,9 @@ you, including through IRS Free File if you are eligible. Our service is a
 paid, optional alternative in which we prepare your return for you.
 
 What this site is: an information site about a paid preparation service, plus
-a five-step intake form used to scope the work before we quote it. It is not a
-filing system and nothing is submitted to any government body through it.
+a short request form on the home page, used to scope the work before we quote
+it and to book a callback. It is not a filing system and nothing is submitted
+to any government body through it.
 
 What this site is not: it carries no prices, no ratings, no client testimonials
 and no claims about refunds, penalties or audit outcomes. It gives no
@@ -30,7 +31,8 @@ hello@aratax-example.com.
 ## Main pages
 
 - [Home](https://paulblack6522.github.io/ara-crypto-tax/): what the service
-  covers, who it is for, and the shape of the work.
+  covers, who it is for, and the request form itself &mdash; six short questions
+  about the shape of your activity, then a time for a preparer to call you.
 - [How it works](https://paulblack6522.github.io/ara-crypto-tax/how-it-works.html):
   the steps from a first message through scoping, quote, preparation and filing.
 - [What we need from you](https://paulblack6522.github.io/ara-crypto-tax/what-you-need.html):
@@ -43,10 +45,11 @@ hello@aratax-example.com.
   who we are, what we do, and what we do not do.
 - [Contact](https://paulblack6522.github.io/ara-crypto-tax/contact.html): phone,
   email, location and a short message form.
-- [Start your filing](https://paulblack6522.github.io/ara-crypto-tax/file.html):
-  the five-step intake form. Step 1 filing basics, step 2 where your activity
-  happened, step 3 what kind of activity, step 4 records and prior filings,
-  step 5 how to reach you.
+- [Start your filing](https://paulblack6522.github.io/ara-crypto-tax/#request):
+  the request form, on the home page. Six questions: the tax years, the kinds of
+  activity, roughly how many transactions, how many exchanges and wallets, which
+  exchanges and wallets by name, and what was reported in prior years &mdash; then
+  your contact details and a callback time.
 
 ## Policies
 
@@ -55,7 +58,7 @@ hello@aratax-example.com.
   resources; how client records are handled and retained; California CCPA and
   CPRA rights and how to exercise them.
 - [Terms of service](https://paulblack6522.github.io/ara-crypto-tax/terms.html):
-  using the site or sending the intake form does not create a preparer-client or
+  using the site or sending the request form does not create a preparer-client or
   attorney-client relationship; an engagement begins only with a signed
   engagement letter and an accepted written quote; governing law California.
 - [Accessibility statement](https://paulblack6522.github.io/ara-crypto-tax/accessibility.html):
