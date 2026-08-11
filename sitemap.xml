@@ -3,8 +3,9 @@
 <!--
   XML sitemap for Ara Tax Services LLC
   Base: https://paulblack6522.github.io/ara-crypto-tax/
-  The home page IS the request form (it was lander-2.html until 2026-08-05,
-  when the long intake wizard file.html was retired).
+  The home page IS the request form (it was lander-2.html until 2026-08-05).
+  The long five-step form file.html was retired on 2026-08-05 and restored
+  on 2026-08-11 at the client's request.
   thanks.html is deliberately absent: it is a confirmation page and is
   marked noindex. 404.html is absent for the same reason.
 -->
@@ -15,6 +16,13 @@
     <lastmod>2026-08-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://paulblack6522.github.io/ara-crypto-tax/file.html</loc>
+    <lastmod>2026-08-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
 
   <url>

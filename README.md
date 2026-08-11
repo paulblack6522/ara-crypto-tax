@@ -15,11 +15,14 @@ time for a preparer to call you. The visual language is the **U.S. Web Design Sy
 which is in the public domain — that is what gives federal sites their plain, boxy,
 high-contrast look, and it is legitimately usable by a private firm.
 
-> **Changed 2026-08-05.** The long five-step intake wizard (`file.html` +
-> `assets/js/wizard.js`) was deleted at the client's instruction, and the short
-> qualifying form that lived at `lander-2.html` became `index.html`. Question 5 changed
-> from *"Do you have your transaction records?"* to *"Which exchanges or wallets did you
-> use?"*, with an **Other: please specify** box.
+> **Changed 2026-08-11.** The five-step **"Start your filing"** page (`file.html` +
+> `assets/js/wizard.js`) was restored, exactly as originally built. It is reachable at
+> its own URL and is not linked from the nav — every nav and footer CTA still points at
+> the short form on the home page.
+>
+> **Changed 2026-08-05.** The short qualifying form that lived at `lander-2.html` became
+> `index.html`. Question 5 changed from *"Do you have your transaction records?"* to
+> *"Which exchanges or wallets did you use?"*, with an **Other: please specify** box.
 
 Every element that would imply government affiliation has been deliberately left out:
 no `.gov` banner, no "official website of the United States government" line, no flag,
@@ -30,6 +33,7 @@ no seal, no eagle-and-scales, and no "IRS" in the brand, wordmark, title or doma
 | File | Purpose |
 |---|---|
 | `index.html` | **Home + the request form** — six questions, contact, callback booking |
+| `file.html` | **Start your filing** — the long five-step form (restored 2026-08-11) |
 | `how-it-works.html` | The engagement, step by step |
 | `forms.html` | Guide to the IRS forms a crypto return involves |
 | `what-you-need.html` | Document checklist |
@@ -88,11 +92,12 @@ connected state from the telephony provider. The staff are called "preparers", n
 
 ## The forms send nothing
 
-Both forms — the request form and the contact form — are demonstration only. There is no
-`action`, no `method`, no `fetch`, and `onsubmit` is blocked, so **no native submission
-path exists even with JavaScript disabled**. Nothing is transmitted, nothing is stored
-server-side, and since the wizard was deleted the site writes nothing to `sessionStorage`
-or `localStorage` either.
+All three forms — the request form on the home page, "Start your filing", and the contact
+form — are demonstration only. There is no `action`, no `method`, no `fetch`, and `onsubmit`
+is blocked, so **no native submission path exists even with JavaScript disabled**. Nothing
+is transmitted and nothing is stored server-side. The only browser storage anywhere on the
+site is `sessionStorage` on `file.html`, which holds the visitor's progress through the five
+steps on their own device and is cleared when the tab closes. No `localStorage`, no cookies.
 
 This is deliberate: no real taxpayer's details should land in an inbox before the
 client has approved how that data is handled.

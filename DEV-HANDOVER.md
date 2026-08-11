@@ -7,8 +7,13 @@ Deploy = copy these files to the web root. Nothing to compile.
 
 Live reference build: https://paulblack6522.github.io/ara-crypto-tax/
 
-> **Changed 2026-08-05.** The long five-step intake wizard (`file.html`) and its script
-> (`assets/js/wizard.js`) were **deleted** at the client's instruction. The short
+> **Changed 2026-08-11.** The five-step **"Start your filing"** page (`file.html` +
+> `assets/js/wizard.js`) is **back**, restored exactly as it was built, and is a
+> **third form you must wire up** — see §1 and §2. It was removed on 2026-08-05 and
+> reinstated at the client's request. It is the only part of the site that uses
+> `sessionStorage`, so `privacy.html` describes that again.
+>
+> **Changed 2026-08-05.** The short
 > request form that used to live at `lander-2.html` is now **`index.html`** — the home
 > page *is* the form. Question 5 changed from *"Do you have your transaction records?"*
 > to *"Which exchanges or wallets did you use?"*, with an **Other: please specify** box.
@@ -23,7 +28,7 @@ Live reference build: https://paulblack6522.github.io/ara-crypto-tax/
 
 | # | Job | Files |
 |---|---|---|
-| 1 | Wire the **2 forms** to a real endpoint (POST + email) | `assets/js/lander2.js`, `contact.html` |
+| 1 | Wire the **3 forms** to a real endpoint (POST + email) | `assets/js/lander2.js`, `assets/js/wizard.js`, `contact.html` |
 | 2 | Wire **"Call me now"** to real telephony (or remove it) | `assets/js/lander2.js` |
 | 3 | **Update `privacy.html` BEFORE the forms go live** | `privacy.html` |
 | 4 | Swap **placeholder phone / email / address** | all pages |
@@ -33,15 +38,24 @@ Details for each are below.
 
 ---
 
-## 2. The two forms — exact hook points
+## 2. The three forms — exact hook points
 
-Both send **nothing** today. Each has the same deliberate guard, and **the guard must
+All three send **nothing** today. Each has the same deliberate guard, and **the guard must
 stay**: the send control is `type="button"` (not `submit`), the `<form>` carries
 `onsubmit="return false"`, and there is a `<noscript>` fallback. That combination means
 there is no native browser submission even with JavaScript disabled — without it, a
 JS-disabled browser does a native `GET` and puts the taxpayer's **name, email and phone
 into the URL query string**, into server logs, browser history and the outbound `Referer`.
 That exact bug was found and fixed in QA. Do not undo it.
+
+⚠ **`file.html` is the exception, and it needs care.** Its send button is `type="submit"`,
+so `onsubmit="return false"` is the only thing cancelling the native post — and that
+attribute is itself JavaScript, so it does nothing when JS is off. What actually protects
+it is that the submit button carries `hidden` until step 5, and with JS off the steps never
+advance, so the button is never rendered and cannot be clicked (re-verified in a JS-disabled
+browser: forcing a click on every button in the form leaves the URL unchanged, no query
+string). **If you make the steps work without JS, or remove that `hidden`, change the button
+to `type="button"` in the same edit.**
 
 > The file is still called `lander2.js` after the rename to `index.html`. Renaming it is
 > safe if you prefer — it is referenced once, in `index.html`'s `<head>`.
@@ -88,25 +102,43 @@ never as the displayed local string.
 **Inline `<script>` at the bottom of the file** — the `sendBtn` click handler.
 `form.reportValidity()` runs first, then the modal opens.
 
-### ⚠️ 2.2a BOTH CONFIRMATION MODALS NOW CLAIM SUCCESS — WIRE THE ENDPOINT BEFORE THIS IS PUBLIC
+### 2.3 "Start your filing" — `file.html` (the five-step form)
+
+**File:** `assets/js/wizard.js`
+**Submit handler ~line 595** — the block headed `DEMO BUILD — THIS HANDLER SENDS NOTHING`.
+Replace the modal call with your POST and open the modal only on a successful response.
+
+⚠ **`clearSaved()` (line ~422, called at ~638) wipes five steps of the visitor's answers**
+out of `sessionStorage`. Call it **only after the server confirms** — on a failed POST it
+throws away everything they typed.
+
+⚠ This is the **only** part of the site that touches browser storage: key `ara-intake-v1`,
+`sessionStorage` only, saved on every step change so a refresh does not lose progress, and
+cleared on submit. `privacy.html` states this — keep the two in step.
+
+⚠ Validation here is also per-group: `data-required` sits on the `.us-form-group`, not on
+the input. Fields are read from `data-name` on the group.
+
+### ⚠️ 2.2a ALL THREE CONFIRMATION MODALS CLAIM SUCCESS — WIRE THE ENDPOINT BEFORE THIS IS PUBLIC
 
 On 2026-08-05 the client asked for the demo notices to be removed, because the build is
 reviewed behind a watermark rather than shown to the public. So:
 
 - `index.html` → **"Your callback is requested… A preparer will call you"**
 - `contact.html` → **"Thank you. We have your message and a preparer will reply"**
+- `file.html` → **"We have your details… one of our tax preparers will contact you"**
 
-**Neither is true until you connect a real endpoint.** Nothing is transmitted today. That is
+**None of them is true until you connect a real endpoint.** Nothing is transmitted today. That is
 fine for a watermarked internal review and it is **not** fine on a live domain: a page that
 tells a taxpayer their details were received when they were not is a deceptive pattern and
 an ad-account risk.
 
-**So treat these two as blocking:** the endpoint must be live *before* the site is, and the
+**So treat all three as blocking:** the endpoint must be live *before* the site is, and the
 modal must only open on a successful response (see the `.then(...)` / `.catch(...)` split in
 §2.1). If for any reason the site has to go public before the endpoint exists, put the
 "nothing was sent" wording back first.
 
-### 2.3 Question 5 — "Other: please specify"
+### 2.4 Question 5 — "Other: please specify"
 
 Question 5 asks **which** exchanges and wallets were used. Seven named tickboxes, then a
 last option **"Other: please specify"** which reveals a free-text box.
@@ -122,7 +154,7 @@ last option **"Other: please specify"** which reveals a free-text box.
 ⚠ **This question asks for platform names only.** It must never grow a field for what is
 held there, what it is worth, a login, an API key or a recovery phrase. See §6.
 
-### 2.4 Fields each form posts
+### 2.5 Fields each form posts
 
 Read them off the `name` attributes; nothing is renamed in JS.
 
@@ -130,6 +162,16 @@ Read them off the `name` attributes; nothing is renamed in JS.
 - **`index.html`** — `tax_years`, `activities`, `tx_volume`, `venue_count`, `venues`,
   `venues_other`, `prior_reporting`, `full_name`, `email`, `phone`, `contact_method`,
   `timezone`, `callback_slot` / `callback_date` + `callback_time`, `consent`
+- **`file.html`** — 57 groups, read them off `data-name` on each `.us-form-group`:
+  `tax_years`, `filing_status`, `service_needed`, `state_residence`, `entity`,
+  `living_abroad`, `foreign_accounts`, `non_us_exchange`, `networks`, `cex_names`,
+  `wallet_count`, `tx_count`, `disposal_count`, `portfolio_band`, `proceeds_band`,
+  `activities`, `defi`, `paid_in_crypto_by`, `gifts_given`, `donation_band`,
+  `records`, `records_access`, `basis_known`, `basis_on_1099da`, `accounting_method`,
+  `forms_received`, `prior_crypto_reporting`, `unfiled_years`, `irs_notice`,
+  `full_name`, `email`, `phone`, `contact_method`, `best_time`, `notes`, `consent`
+  (+ the `*_other` free-text partners and the conditional groups behind
+  `data-show-when`). Nothing is renamed in JS.
 
 ---
 
@@ -187,9 +229,9 @@ anything that writes to `sessionStorage`/`localStorage` — that page becomes fa
 section that needs the new data flow described: what is collected, where it is sent, who
 processes it, how long it is kept.
 
-> The storage claim changed on 2026-08-05: deleting the wizard removed the only
-> `sessionStorage` use on the site, so the page now says there is none. If you add any,
-> that line goes back.
+> Storage: `file.html` keeps the visitor's progress in `sessionStorage` under
+> `ara-intake-v1`, and `privacy.html` says so. It is the only storage on the site.
+> If you remove that page again, or add any other storage, edit that line to match.
 
 Same for `terms.html` if you change what the service does.
 
@@ -274,8 +316,13 @@ business name cannot get indexed and later compete with their live site.
 
 ## 9. One funnel
 
-Every "Start your filing" / "Request a callback" button on the site now points at
-**`index.html#request`** — the request form on the home page. There is no second form path.
+Every "Start your filing" / "Request a callback" button in the site nav and footer points at
+**`index.html#request`** — the short request form on the home page.
+
+⚠ **`file.html` is a second, longer path, reachable by its URL and not linked from the nav.**
+It was restored on 2026-08-11 at the client's request. If it should become the main route,
+the nav CTA and the footer link are the two places to repoint — say the word rather than
+guessing, because which form the ads land on is a campaign decision.
 
 ⚠ **Validation is per-question via `data-required` on the field *group*, not `required` on
 the individual input.** Remember this when you test — a group of checkboxes is validated as a
@@ -305,6 +352,8 @@ disabled** after any form change.
 ```
 index.html            HOME — and the request form itself (#request).
                       Six questions + contact + callback booking.
+file.html             "Start your filing" — the long five-step form
+                          ← FORM HOOK: wizard.js, see §2.3
 how-it-works.html     The engagement, step by step
 what-you-need.html    Document checklist
 forms.html            Guide to the IRS forms a crypto return involves
@@ -321,6 +370,9 @@ ads.html              Internal: the Google Ads campaign build sheet (noindex, no
 
 assets/css/site.css   All styles (USWDS-derived, public domain)
 assets/js/site.js     Shared: nav drawer, modals, focus management
+assets/js/wizard.js   file.html — the five-step form, per-step validation,
+                      sessionStorage progress, the confirmation modal
+                          ← FORM HOOK: the block headed DEMO BUILD (~line 595)
 assets/js/lander2.js  index.html — the request form, the "Other: please specify" reveal,
                       the callback scheduler and "Call me now"
                           ← FORM HOOK: function submit()
@@ -339,9 +391,9 @@ README.md             Fuller background on the build
 `_system/` is documentation for whoever edits the copy — it is not served content and can be
 left out of the production web root if you prefer.
 
-**Deleted on 2026-08-05:** `file.html` and `assets/js/wizard.js` (the five-step intake
-wizard), and the previous marketing home page. They are in the repository history if anyone
-needs them back.
+**Restored 2026-08-11:** `file.html` + `assets/js/wizard.js`, exactly as originally built.
+**Still deleted:** the previous marketing home page and `lander-2.html` (it became
+`index.html`). Both are in the repository history if anyone needs them back.
 
 ---
 

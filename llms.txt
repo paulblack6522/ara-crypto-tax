@@ -33,6 +33,10 @@ hello@aratax-example.com.
 - [Home](https://paulblack6522.github.io/ara-crypto-tax/): what the service
   covers, who it is for, and the request form itself &mdash; six short questions
   about the shape of your activity, then a time for a preparer to call you.
+- [Start your filing](https://paulblack6522.github.io/ara-crypto-tax/file.html): the
+  long five-step form for people who would rather give the full picture up front &mdash;
+  filing basics, where the activity happened, what kind of activity, records and prior
+  filings, and how to reach you.
 - [How it works](https://paulblack6522.github.io/ara-crypto-tax/how-it-works.html):
   the steps from a first message through scoping, quote, preparation and filing.
 - [What we need from you](https://paulblack6522.github.io/ara-crypto-tax/what-you-need.html):

@@ -10,9 +10,10 @@
     * no third-party requests at all (no fonts, no CDN, no maps, no chat)
     * the request form and the contact form send their contents NOWHERE;
       they are handled entirely inside the visitor's own browser
-    * no browser storage of any kind — no sessionStorage, no localStorage
-      (the long intake wizard that used sessionStorage was retired on
-      2026-08-05; nothing on the site writes to storage now)
+    * the only browser storage is sessionStorage, used by the step-by-step
+      filing form on file.html to keep the visitor's progress on their own
+      device; it is never transmitted and the browser clears it with the
+      tab. No localStorage, anywhere.
 
   THE MOMENT ANY OF THE FOLLOWING IS ADDED, THIS PAGE BECOMES FALSE AND
   MUST BE REWRITTEN BEFORE THE CHANGE GOES LIVE:
@@ -178,7 +179,7 @@
   <li><strong>No analytics and no trackers</strong> &mdash; no tag manager, advertising pixel, heatmap or session recorder.</li>
   <li><strong>No third-party requests.</strong> Every stylesheet, script and image comes from this site. The site works with no network connection once the page has loaded.</li>
   <li><strong>The forms transmit nothing.</strong> They are handled entirely inside your own browser and are not written to any database.</li>
-  <li><strong>No browser storage.</strong> Nothing is written to <code>sessionStorage</code> or <code>localStorage</code>.</li>
+  <li><strong>Browser storage.</strong> The step-by-step filing form on <a href="file.html">Start your filing</a> keeps your progress in <code>sessionStorage</code>, which lives on your own device only. It is never sent anywhere, and your browser clears it when you close the tab. Nothing else on the site writes to storage, and no <code>localStorage</code> is used.</li>
   <li><strong>No fingerprinting.</strong> We do not build a device profile or track you across sites.</li>
 </ul>
 
