@@ -3,8 +3,8 @@
 <!--
   XML sitemap for Ara Tax Services LLC
   Base: https://paulblack6522.github.io/ara-crypto-tax/
-  The home page is a one-screen splash: it says what the service is and
-  sends the visitor to file.html (Start your filing) with Get started.
+  The home page is the informational landing page; its Start your filing
+  buttons open file.html, the five-step form.
   The short six-question callback form lives at request.html (it was the
   home page from 2026-08-05 to 2026-08-11, and lander-2.html before that).
   thanks.html is deliberately absent: it is a confirmation page and is

@@ -19,9 +19,14 @@ high-contrast look, and it is legitimately usable by a private firm.
 > **Changed 2026-08-11.** Two things. The five-step **"Start your filing"** page
 > (`file.html` + `assets/js/wizard.js`) was restored, exactly as originally built, and
 > it is now the main route: every "Start your filing" CTA on the site opens it.
-> And **`index.html` is now a one-screen splash** — the firm, one sentence, three
-> facts and a **Get started** button. It does not scroll. The short six-question
-> callback form moved from the home page to **`request.html`**.
+> **`index.html` is the original informational home page**, restored from before the
+> 05 Aug restructure: what the service is, how it works in three steps, what we handle,
+> Form 1099-DA, and a closing call to action. The short six-question callback form moved
+> off the home page to **`request.html`**.
+> **Every callout box is gone site-wide** — 8 pale-blue summary boxes and 1 info alert
+> were unwrapped, keeping the wording as ordinary prose. Do not add a coloured panel
+> back; the only alerts left are the form's error summary, its confirmation, and the
+> `<noscript>` fallbacks.
 >
 > **Changed 2026-08-05.** The short qualifying form that lived at `lander-2.html` became
 > `index.html`. Question 5 changed from *"Do you have your transaction records?"* to
@@ -35,7 +40,7 @@ no seal, no eagle-and-scales, and no "IRS" in the brand, wordmark, title or doma
 
 | File | Purpose |
 |---|---|
-| `index.html` | **Home** — one screen, no scroll, **Get started** &rarr; `file.html` |
+| `index.html` | **Home** — what the service is, three steps, what we handle, 1099-DA |
 | `file.html` | **Start your filing** — the five-step form, the main route |
 | `request.html` | **Request a callback** — six questions + callback booking |
 | `how-it-works.html` | The engagement, step by step |
@@ -55,17 +60,15 @@ should be added to any page unless it is supported by a line in `FACTS.md`.**
 
 ## The funnel — `index.html` &rarr; `file.html`
 
-`index.html` is a **one-screen splash**: masthead, headline, one sentence, three facts, a
-**Get started** button, and the two mandatory disclosures. It must not scroll — the CSS
-comment above `.us-splash-body` in `site.css` explains the height budget and the order in
-which content is dropped as the viewport shrinks. Get started opens `file.html`, and every
-"Start your filing" button elsewhere on the site opens the same page.
+`index.html` explains the service in plain sections — no callout boxes, no marketing
+furniture — and both of its **Start your filing** buttons open `file.html`, as does every
+"Start your filing" button elsewhere on the site.
 
 ### The second form — `request.html`
 
 For visitors who would rather talk before filling anything in. Six qualifying questions +
 contact + a **callback booking**, then a confirmation. It asks only what predicts the fee
-and flags a lead. Linked from the splash, from the footer, and from `contact.html`.
+and flags a lead. Linked from the footer and from `contact.html`.
 
 The six: the tax years · the kinds of activity · roughly how many transactions · how many
 exchanges and wallets · **which exchanges and wallets, by name** · what was reported in

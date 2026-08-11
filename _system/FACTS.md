@@ -561,8 +561,8 @@ ban in `COPY-RULES.md` §2.4.
 >
 > The five-step form (`file.html` + `assets/js/wizard.js`) was deleted on
 > 2026-08-05 and **restored on 2026-08-11 at the client's request**. It is now
-> the **main route**: `index.html` is a one-screen splash whose Get started
-> button opens it. The field list further down is live again — treat it as the
+> the **main route**: the Start your filing buttons on `index.html` — the
+> original informational home page, also restored — open it. The field list further down is live again — treat it as the
 > spec, not as research.
 >
 > **The second form (`request.html`, `#request`) — six questions + callback:**

@@ -12,10 +12,13 @@ Live reference build: https://paulblack6522.github.io/ara-crypto-tax/
 > 1. The five-step **"Start your filing"** page (`file.html` + `assets/js/wizard.js`) is
 >    **back**, restored exactly as it was built, and is now the **main route**. It is a
 >    **third form you must wire up** — see §1 and §2.3.
-> 2. **`index.html` is now a one-screen splash** — headline, one sentence, three facts,
->    a **Get started** button. It has no form on it. **It must not scroll**; the height
->    budget and the rules that keep it on one screen are in the comment at the top of
->    the file and above `.us-splash-body` in `site.css`.
+> 2. **`index.html` is the original informational home page** (restored from before the
+>    05 Aug restructure). It has no form on it; its two **Start your filing** buttons
+>    open `file.html`.
+> 2a. **Every callout box was removed site-wide** — 8 pale-blue `us-summary-box` panels
+>    and 1 `us-alert--info` were unwrapped across 9 pages, wording kept verbatim as
+>    ordinary prose. **Do not add a coloured panel back.** The only alerts remaining are
+>    functional: the form's error summary, its confirmation, and `<noscript>` fallbacks.
 > 3. **The short six-question callback form moved to `request.html`** (it was the home
 >    page; `assets/js/lander2.js` is unchanged and still drives it).
 > 4. `file.html` is the only part of the site that uses `sessionStorage`, so
@@ -325,16 +328,15 @@ business name cannot get indexed and later compete with their live site.
 
 ## 9. One funnel
 
-**`index.html` (splash) → Get started → `file.html` (five steps) → confirmation modal.**
+**`index.html` → Start your filing → `file.html` (five steps) → confirmation modal.**
 Every "Start your filing" button in the site nav and footer opens `file.html` too.
 
 `request.html` is the **alternative** for a visitor who would rather talk first. It is
-linked from the splash, the splash footer, `contact.html` and `forms.html` — never from the
-nav CTA. Both forms are live and both need wiring.
+linked from the home page footer, `contact.html` and `forms.html` — never from the nav CTA. Both forms are live and both need wiring.
 
 ⚠ Which page **paid traffic** lands on is a campaign decision, not a code one. `ads.html`
-still names the site root; if the ads should skip the splash, change the final URL there
-and nowhere else.
+still names the site root; if the ads should land straight on the form, change the final
+URL there and nowhere else.
 
 ⚠ **Validation is per-question via `data-required` on the field *group*, not `required` on
 the individual input.** Remember this when you test — a group of checkboxes is validated as a
@@ -362,9 +364,9 @@ disabled** after any form change.
 ## 11. File map
 
 ```
-index.html            HOME — one screen, no scroll, Get started -> file.html.
-                      No form on it. Do not add sections; see the comment
-                      at the top of the file.
+index.html            HOME — what the service is, three steps, what we
+                      handle, Form 1099-DA, closing CTA. No form on it;
+                      its buttons open file.html.
 file.html             "Start your filing" — the five-step form, MAIN ROUTE
                           ← FORM HOOK: wizard.js, see §2.3
 request.html          "Request a callback" — six questions + callback
@@ -409,8 +411,8 @@ left out of the production web root if you prefer.
 
 **Restored 2026-08-11:** `file.html` + `assets/js/wizard.js`, exactly as originally built.
 **Renamed 2026-08-11:** the old `index.html` (the six-question form) is now `request.html`;
-the new `index.html` is the splash. **Still deleted:** the original marketing home page.
-It is in the repository history if anyone needs it back.
+and the original marketing home page was restored as the new `index.html`. Both the splash
+and `lander-2.html` are in the repository history if anyone needs them back.
 
 ---
 

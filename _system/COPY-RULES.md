@@ -225,16 +225,19 @@ which is what the impersonation lander we declined on 2026-08-01 was built to do
 
 > **This section describes what is built.** The five-step form (`file.html`,
 > `assets/js/wizard.js`) was deleted on 2026-08-05 and **restored on
-> 2026-08-11 at the client's request**. It is the main route: `index.html` is
-> a one-screen splash whose **Get started** button opens it. The six-question
-> callback form (formerly `lander-2.html`, then `index.html`) is now
-> `request.html` and remains the alternative path.
+> 2026-08-11 at the client's request**. It is the main route: the **Start your
+> filing** buttons on `index.html` — the original informational home page, also
+> restored — open it. The six-question callback form (formerly `lander-2.html`,
+> then `index.html`) is now `request.html` and remains the alternative path.
 >
-> ⚠ **The splash has its own rule: it must fit on one screen.** Nothing may be
-> added to `index.html` — no extra paragraph, logo strip, testimonial or
-> section. Copy that wants to exist goes on `how-it-works.html`. The two
-> mandatory footer disclosures stay verbatim there as everywhere else; if
-> something has to give on a small screen it is our content, never theirs.
+> ⚠ **2026-08-11: no callout boxes anywhere on the site.** The yellow ones went
+> on 08-05; the **pale-blue `us-summary-box` panels and `us-alert--info`** went
+> today, on the client's instruction ("no warning or tooltips"). Their wording
+> was kept verbatim as ordinary prose. **Do not reintroduce either class, and
+> do not invent a new coloured panel.** The only alerts left are functional:
+> the form's error summary, its confirmation, and the `<noscript>` fallbacks.
+> The look to aim for is an official government page: plain headings, plain
+> paragraphs, no marketing furniture. Density is fine — decoration is not.
 
 ## 4a. The five-step form — steps, fixed
 

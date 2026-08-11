@@ -17,7 +17,7 @@ paid, optional alternative in which we prepare your return for you.
 What this site is: an information site about a paid preparation service, plus
 two forms used to scope the work before we quote it - a five-step filing form
 at file.html, and a shorter six-question callback form at request.html. The
-home page is a one-screen introduction that leads to the five-step form. It is not a filing system and nothing is submitted
+home page explains the service and leads to the five-step form. It is not a filing system and nothing is submitted
 to any government body through it.
 
 What this site is not: it carries no prices, no ratings, no client testimonials
