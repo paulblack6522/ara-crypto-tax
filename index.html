@@ -1,28 +1,10 @@
 <!DOCTYPE html>
-<!--
-  ======================================================================
-  HOME — a single screen, deliberately.
-  ======================================================================
-  This page is a door, not a sales page: the firm, one sentence on what
-  the service is, three facts, and Get started -> file.html.
-
-  IT MUST NOT SCROLL. The layout is a flex column pinned to 100dvh with
-  the two mandatory footer disclosures in the last row. If you add a
-  paragraph, a logo strip or a testimonial, it will scroll on a phone —
-  put it on how-it-works.html instead.
-
-  The two disclosures in the footer (non-affiliation, and the free-file
-  alternative) are required on EVERY page and must stay verbatim. They
-  are what keeps this site inside Google's "Government documents and
-  official services" policy. Do not shorten them to save height.
-  ======================================================================
--->
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Crypto tax filing | Ara Tax Services LLC</title>
-<meta name="description" content="Ara Tax Services LLC prepares and files United States federal tax reporting for people with cryptocurrency activity. Answer a few questions and we send you a written quote before any work begins.">
+<title>Crypto tax return preparation and filing | Ara Tax Services LLC</title>
+<meta name="description" content="Ara Tax Services LLC is a private tax preparation firm in San Ramon, California. We prepare and file US federal tax reporting for people with crypto activity.">
 <!-- SAMPLE BUILD: noindex so this preview cannot be indexed under the client's real
      business name or compete with their live site. Before this goes live on the
      client's own domain, change every page to: index, follow, max-image-preview:large
@@ -80,16 +62,16 @@
 }
 </script>
 </head>
-<body class="us-splash-body">
+<body>
 
 <a class="us-skiplink" href="#main-content">Skip to main content</a>
 
-<header class="us-header us-header--splash">
+<header class="us-header">
   <div class="us-utility-bar">
     <div class="us-container us-utility-bar__inner">
       <ul class="us-utility-list">
         <li>San Ramon, California</li>
-        <li class="us-utility-list__phone"><a href="tel:+19255550148">(925)&nbsp;555-0148</a></li>
+        <li><a href="tel:+19255550148">(925)&nbsp;555-0148</a></li>
         <li><a href="mailto:hello@aratax-example.com">hello@aratax-example.com</a></li>
       </ul>
     </div>
@@ -121,33 +103,179 @@
   <div class="us-nav-scrim" data-nav-scrim></div>
 </header>
 
-<main class="us-splash" id="main-content">
-  <div class="us-container us-splash__inner">
+<main id="main-content">
 
-    <h1 class="us-splash__title">Crypto tax returns,<br>prepared and filed for you</h1>
+  <!-- Intro band -->
+  <section class="us-section us-band--light">
+    <div class="us-container">
+      <h1>Crypto tax filing, prepared and filed for you</h1>
+      <p class="us-lead">Ara Tax Services LLC is a private tax preparation firm in San Ramon, California. We prepare United States federal tax returns for people who bought, sold, swapped, spent, earned or transferred digital assets during the year. You send us your exchange exports and wallet addresses, we reconcile them and prepare the return, and we file it once you have read it and approved it.</p>
+      <div class="us-button-group us-mb-0">
+        <a class="us-button us-button--big" href="file.html">Start your filing</a>
+        <a class="us-button us-button--big us-button--outline" href="how-it-works.html">See how it works</a>
+      </div>
+    </div>
+  </section>
 
-    <p class="us-splash__lead">Ara Tax Services LLC prepares United States federal tax
-      reporting for people with cryptocurrency activity.<span class="us-splash__lead-more">
-      Answer a few questions about what you did, and we tell you what your return
-      involves.</span></p>
+  <!-- What this service is + three steps -->
+  <section class="us-section">
+    <div class="us-container">
 
-    <ul class="us-splash__facts">
-      <li>Every return is prepared by a person, not a tool.</li>
-      <li>You get a written quote before any work begins.</li>
-      <li>Nothing is charged until you read the quote and tell us to go ahead.</li>
-    </ul>
+      <h2>What this service is</h2>
+      <ul class="us-list--spaced">
+        <li>We prepare and file your federal return covering digital-asset activity. That means Form 8949 and Schedule D for disposals, and Schedule 1 or Schedule C for digital assets received as income.</li>
+        <li>A preparer reads your records. We reconcile the exports and wallet histories you send us, and we tell you what is missing before we start work.</li>
+        <li>We are not the IRS. We are a private firm, and we are not affiliated with, endorsed by, or acting on behalf of any government agency.</li>
+        <li>We do not give investment advice, we do not tell you what to buy or sell, and we never take custody of your assets, your keys or your accounts.</li>
+        </ul>
 
-    <p class="us-splash__action">
-      <a class="us-button us-button--big" href="file.html">Get started</a>
-    </p>
+      <h2>How it works, in three steps</h2>
+      <p class="us-measure">The full sequence is set out on <a href="how-it-works.html">how it works</a>. In short:</p>
 
-    <p class="us-splash__alt">Five short steps, no documents needed yet. Would rather
-      talk first? <a href="request.html#request">Ask a preparer to call you</a>.</p>
+      <ol class="us-process">
+        <li class="us-process__item">
+          <h3 class="us-process__heading">Tell us about the year</h3>
+          <p class="us-process__text">You complete a five-step intake form. It asks which tax years you need, which exchanges and wallets you used, what kind of activity you had, and what records you can provide. It asks for no passwords, no private keys and no account numbers.</p>
+        </li>
+        <li class="us-process__item">
+          <h3 class="us-process__heading">Send your records</h3>
+          <p class="us-process__text">We reply with the scope of the work and a quote. Once you accept, you send read-only CSV exports and public wallet addresses. We reconcile them, and we come back to you with anything that is missing or cannot be matched.</p>
+        </li>
+        <li class="us-process__item">
+          <h3 class="us-process__heading">Review, then we file</h3>
+          <p class="us-process__text">We prepare the return and the digital-asset forms that go with it. You read the draft, ask us anything about it, and tell us to file. Nothing is filed with the IRS until you approve it.</p>
+        </li>
+      </ol>
 
-  </div>
+    </div>
+  </section>
+
+  <!-- What we handle -->
+  <section class="us-section us-band--light">
+    <div class="us-container">
+      <h2>What we handle</h2>
+      <p class="us-measure">Each of these is asked about on the intake form, because each one changes how the return is prepared. The statements below are the federal treatment, not advice about your own position.</p>
+
+      <ul class="us-card-grid us-card-grid--3">
+
+        <li class="us-card">
+          <h3 class="us-card__title">Exchange trading</h3>
+          <p class="us-card__text">Every sale, exchange or other disposition of a digital asset held as a capital asset goes on Form 8949, including crypto-to-crypto swaps, and the short-term and long-term totals carry to Schedule D.</p>
+        </li>
+
+        <li class="us-card">
+          <h3 class="us-card__title">Wallet-to-wallet transfers</h3>
+          <p class="us-card__text">Moving digital assets between wallets, addresses or accounts you own is not a taxable event, unless digital assets are used or withheld to pay for the transfer service, in which case that portion is a disposition.</p>
+        </li>
+
+        <li class="us-card">
+          <h3 class="us-card__title">Staking rewards</h3>
+          <p class="us-card__text">Rev. Rul. 2023-14 includes the fair market value of validation rewards in gross income in the year the taxpayer gains dominion and control over them, reported as ordinary income on Schedule 1, line 8v, or on Schedule C where it is a trade or business.</p>
+        </li>
+
+        <li class="us-card">
+          <h3 class="us-card__title">Mining</h3>
+          <p class="us-card__text">Notice 2014-21 includes the fair market value of mined units in gross income as of the date of receipt; where mining is a trade or business the net earnings are subject to self-employment tax on Schedule C with Schedule SE, and where it is not, the income is ordinary income on Schedule 1.</p>
+        </li>
+
+        <li class="us-card">
+          <h3 class="us-card__title">NFTs</h3>
+          <p class="us-card__text">NFTs are digital assets, so buying, selling and swapping them produces capital gain or loss on Form 8949 using the digital-asset boxes, and an NFT disposition under $600 that appears on no Form 1099-DA is still reportable.</p>
+        </li>
+
+        <li class="us-card">
+          <h3 class="us-card__title">DeFi</h3>
+          <p class="us-card__text">An exchange of one digital asset for another that differs materially is a taxable disposition, and paying a gas fee in digital assets is itself a disposition. Notice 2024-57 lists wrapping, liquidity, staking, lending, short sale and notional principal contract transactions as categories requiring further study, and draws no inference about their treatment.</p>
+        </li>
+
+        <li class="us-card">
+          <h3 class="us-card__title">Airdrops and forks</h3>
+          <p class="us-card__text">Rev. Rul. 2019-24 treats an airdrop of a new cryptocurrency following a hard fork as ordinary income at its fair market value when received, provided the taxpayer has dominion and control, and finds no gross income where a hard fork produces no new units.</p>
+        </li>
+
+        <li class="us-card">
+          <h3 class="us-card__title">Crypto received as income</h3>
+          <p class="us-card__text">Digital assets paid as employee wages are subject to federal income tax withholding, FICA and FUTA and are reported on Form W-2 at fair market value on the date of receipt, while digital assets paid to an independent contractor are self-employment income on Schedule C with Schedule SE.</p>
+        </li>
+
+        <li class="us-card">
+          <h3 class="us-card__title">Losses</h3>
+          <p class="us-card__text">Section 165 allows a loss only where a transaction is closed and completed, fixed by an identifiable event and actually sustained in the year, and an individual's net capital loss deduction is limited to $3,000 per year ($1,500 if married filing separately) with the excess carried forward.</p>
+        </li>
+
+      </ul>
+    </div>
+  </section>
+
+  <!-- Form 1099-DA -->
+  <section class="us-section us-section--tight">
+    <div class="us-container">
+      <h2>New for the 2025 tax year: Form 1099-DA</h2>
+      <p class="us-measure">Form 1099-DA, Digital Asset Proceeds From Broker Transactions, is new. Gross proceeds reporting is required for transactions effected on or after January 1, 2025, so the 2025 tax year is the first year the form exists. Brokers had to furnish the 2025 form to taxpayers by February 17, 2026.</p>
+      <p class="us-measure">The IRS states that most 2025 statements will not provide basis, and that basis must be calculated by taxpayers before their 2025 tax return can be filed. Cost basis reporting begins for certain transactions effected on or after January 1, 2026.</p>
+      <p class="us-measure">No Form 1099-DA arrives from DeFi front-ends, from non-custodial wallets, generally from exchanges outside the United States, or for staking and mining rewards. The reporting duty does not depend on receiving a statement: income, gain or loss from all taxable transactions involving virtual currency must be reported regardless of the amount or whether a payee statement arrives.</p>
+    </div>
+  </section>
+
+  <!-- Closing call to action -->
+  <section class="us-section us-band--navy">
+    <div class="us-container">
+      <h2>Start your filing</h2>
+      <p class="us-measure">The intake form takes five steps and asks only about the shape of your activity: the tax years, the venues and wallets, the kind of transactions, your records, and how to reach you. It asks for no Social Security number, no seed phrase, no private keys, no exchange passwords and no API keys. We read your answers and reply with the scope of the work and a quote.</p>
+      <div class="us-button-group">
+        <a class="us-button us-button--big us-button--inverse" href="file.html">Start your filing</a>
+        <a class="us-button us-button--big us-button--inverse" href="contact.html">Ask a question first</a>
+      </div>
+    </div>
+  </section>
+
 </main>
 
-<footer class="us-footer us-footer--splash">
+<footer class="us-footer">
+  <div class="us-footer__top us-container">
+    <div class="us-footer__nav">
+
+      <div>
+        <h2 class="us-footer__heading">Our service</h2>
+        <ul class="us-footer__list">
+          <li><a href="how-it-works.html">How it works</a></li>
+          <li><a href="what-you-need.html">What we need from you</a></li>
+          <li><a href="forms.html">IRS forms &amp; reporting</a></li>
+          <li><a href="file.html">Start your filing</a></li>
+          <li><a href="request.html#request">Request a callback</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="us-footer__heading">Answers</h2>
+        <ul class="us-footer__list">
+          <li><a href="faq.html">Frequently asked questions</a></li>
+          <li><a href="about.html">About the firm</a></li>
+          <li><a href="contact.html">Contact us</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="us-footer__heading">This site</h2>
+        <ul class="us-footer__list">
+          <li><a href="privacy.html">Privacy policy</a></li>
+          <li><a href="terms.html">Terms of service</a></li>
+          <li><a href="accessibility.html">Accessibility statement</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="us-footer__heading">Ara Tax Services LLC</h2>
+        <address class="us-footer__contact">
+          <p>San Ramon, California</p>
+          <p><a href="tel:+19255550148">(925)&nbsp;555-0148</a></p>
+          <p><a href="mailto:hello@aratax-example.com">hello@aratax-example.com</a></p>
+        </address>
+      </div>
+
+    </div>
+  </div>
+
   <div class="us-footer__legal">
     <div class="us-container">
 
@@ -158,7 +286,6 @@
       <div class="us-footer__bottom">
         <p>&copy; <span data-current-year>2026</span> Ara Tax Services LLC. All rights reserved.</p>
         <ul class="us-footer__bottom-links">
-          <li><a href="request.html#request">Request a callback</a></li>
           <li><a href="privacy.html">Privacy</a></li>
           <li><a href="terms.html">Terms</a></li>
           <li><a href="accessibility.html">Accessibility</a></li>
