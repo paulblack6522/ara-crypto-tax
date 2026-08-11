@@ -557,15 +557,15 @@ ban in `COPY-RULES.md` §2.4.
 
 ## 8. Intake field list
 
-> ### ⚠ RETIRED 2026-08-05 — kept as research, not as a build spec
+> ### ⚠ UN-RETIRED 2026-08-11 — this list is the build spec again
 >
-> The long five-step wizard (`file.html` + `assets/js/wizard.js`) was **deleted**
-> at the client's instruction. The site now has **one** form: the six-question
-> request form on `index.html`, which was `lander-2.html`. The field list below
-> is no longer what is built. It is kept because it is researched scoping work —
-> if a longer form is ever wanted again, start here rather than from scratch.
+> The five-step form (`file.html` + `assets/js/wizard.js`) was deleted on
+> 2026-08-05 and **restored on 2026-08-11 at the client's request**. It is now
+> the **main route**: `index.html` is a one-screen splash whose Get started
+> button opens it. The field list further down is live again — treat it as the
+> spec, not as research.
 >
-> **What is live now (`index.html`, `#request`):**
+> **The second form (`request.html`, `#request`) — six questions + callback:**
 >
 > | # | Question | `name` |
 > |---|---|---|

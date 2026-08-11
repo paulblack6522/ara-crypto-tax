@@ -9,16 +9,19 @@ Open `index.html` in a browser and it works.
 
 ## What this is
 
-A site about filing US federal tax reporting on cryptocurrency activity. The home page
-**is** the request form: six short questions about the shape of your activity, then a
-time for a preparer to call you. The visual language is the **U.S. Web Design System**,
+A site about filing US federal tax reporting on cryptocurrency activity. The home page is
+a single screen that says what the service is and opens the filing form with one button;
+the form itself asks five short sets of questions about the shape of your activity. The
+visual language is the **U.S. Web Design System**,
 which is in the public domain — that is what gives federal sites their plain, boxy,
 high-contrast look, and it is legitimately usable by a private firm.
 
-> **Changed 2026-08-11.** The five-step **"Start your filing"** page (`file.html` +
-> `assets/js/wizard.js`) was restored, exactly as originally built. It is reachable at
-> its own URL and is not linked from the nav — every nav and footer CTA still points at
-> the short form on the home page.
+> **Changed 2026-08-11.** Two things. The five-step **"Start your filing"** page
+> (`file.html` + `assets/js/wizard.js`) was restored, exactly as originally built, and
+> it is now the main route: every "Start your filing" CTA on the site opens it.
+> And **`index.html` is now a one-screen splash** — the firm, one sentence, three
+> facts and a **Get started** button. It does not scroll. The short six-question
+> callback form moved from the home page to **`request.html`**.
 >
 > **Changed 2026-08-05.** The short qualifying form that lived at `lander-2.html` became
 > `index.html`. Question 5 changed from *"Do you have your transaction records?"* to
@@ -32,8 +35,9 @@ no seal, no eagle-and-scales, and no "IRS" in the brand, wordmark, title or doma
 
 | File | Purpose |
 |---|---|
-| `index.html` | **Home + the request form** — six questions, contact, callback booking |
-| `file.html` | **Start your filing** — the long five-step form (restored 2026-08-11) |
+| `index.html` | **Home** — one screen, no scroll, **Get started** &rarr; `file.html` |
+| `file.html` | **Start your filing** — the five-step form, the main route |
+| `request.html` | **Request a callback** — six questions + callback booking |
 | `how-it-works.html` | The engagement, step by step |
 | `forms.html` | Guide to the IRS forms a crypto return involves |
 | `what-you-need.html` | Document checklist |
@@ -49,11 +53,19 @@ should be added to any page unless it is supported by a line in `FACTS.md`.**
 
 ---
 
-## One funnel — the request form on `index.html`
+## The funnel — `index.html` &rarr; `file.html`
 
-Six qualifying questions + contact + a **callback booking**, then a confirmation. It asks
-only what predicts the fee and flags a lead. Every "Start your filing" button on the site
-points at `index.html#request`; paid traffic lands on the same page.
+`index.html` is a **one-screen splash**: masthead, headline, one sentence, three facts, a
+**Get started** button, and the two mandatory disclosures. It must not scroll — the CSS
+comment above `.us-splash-body` in `site.css` explains the height budget and the order in
+which content is dropped as the viewport shrinks. Get started opens `file.html`, and every
+"Start your filing" button elsewhere on the site opens the same page.
+
+### The second form — `request.html`
+
+For visitors who would rather talk before filling anything in. Six qualifying questions +
+contact + a **callback booking**, then a confirmation. It asks only what predicts the fee
+and flags a lead. Linked from the splash, from the footer, and from `contact.html`.
 
 The six: the tax years · the kinds of activity · roughly how many transactions · how many
 exchanges and wallets · **which exchanges and wallets, by name** · what was reported in
@@ -92,8 +104,8 @@ connected state from the telephony provider. The staff are called "preparers", n
 
 ## The forms send nothing
 
-All three forms — the request form on the home page, "Start your filing", and the contact
-form — are demonstration only. There is no `action`, no `method`, no `fetch`, and `onsubmit`
+All three forms — "Start your filing", the callback form on `request.html`, and the
+contact form — are demonstration only. There is no `action`, no `method`, no `fetch`, and `onsubmit`
 is blocked, so **no native submission path exists even with JavaScript disabled**. Nothing
 is transmitted and nothing is stored server-side. The only browser storage anywhere on the
 site is `sessionStorage` on `file.html`, which holds the visitor's progress through the five
@@ -107,13 +119,14 @@ client has approved how that data is handled.
 **See `DEV-HANDOVER.md` — it is the full brief for this, with the hook points.** In short:
 
 1. Replace the body of `submit()` in `assets/js/lander2.js` with a `POST` to the firm's own
-   server over HTTPS, and do the same in the inline script at the bottom of `contact.html`.
-2. Both carry the same guard: `type="button"` send, `onsubmit="return false"`, and a
+   server over HTTPS, do the same for the `DEMO BUILD` block in `assets/js/wizard.js`, and
+   again in the inline script at the bottom of `contact.html`.
+2. They carry the same guard: `type="button"` send, `onsubmit="return false"`, and a
    `<noscript>` fallback — so there is no native submission path even with JS off. Keep it.
 3. **Do not log the payload.**
 4. **Update `privacy.html` first.** It currently states — truthfully — that the site
-   sets no cookies, runs no analytics, writes nothing to browser storage, and transmits
-   nothing. Adding an endpoint or analytics makes that page false. There is a visible
+   sets no cookies, runs no analytics, writes nothing to browser storage except the
+   five-step form's own progress, and transmits nothing. Adding an endpoint or analytics makes that page false. There is a visible
    comment at the top of the file saying so.
 
 ---

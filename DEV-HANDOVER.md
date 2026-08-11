@@ -7,11 +7,19 @@ Deploy = copy these files to the web root. Nothing to compile.
 
 Live reference build: https://paulblack6522.github.io/ara-crypto-tax/
 
-> **Changed 2026-08-11.** The five-step **"Start your filing"** page (`file.html` +
-> `assets/js/wizard.js`) is **back**, restored exactly as it was built, and is a
-> **third form you must wire up** — see §1 and §2. It was removed on 2026-08-05 and
-> reinstated at the client's request. It is the only part of the site that uses
-> `sessionStorage`, so `privacy.html` describes that again.
+> **Changed 2026-08-11 — the funnel changed shape. Read this first.**
+>
+> 1. The five-step **"Start your filing"** page (`file.html` + `assets/js/wizard.js`) is
+>    **back**, restored exactly as it was built, and is now the **main route**. It is a
+>    **third form you must wire up** — see §1 and §2.3.
+> 2. **`index.html` is now a one-screen splash** — headline, one sentence, three facts,
+>    a **Get started** button. It has no form on it. **It must not scroll**; the height
+>    budget and the rules that keep it on one screen are in the comment at the top of
+>    the file and above `.us-splash-body` in `site.css`.
+> 3. **The short six-question callback form moved to `request.html`** (it was the home
+>    page; `assets/js/lander2.js` is unchanged and still drives it).
+> 4. `file.html` is the only part of the site that uses `sessionStorage`, so
+>    `privacy.html` describes that again.
 >
 > **Changed 2026-08-05.** The short
 > request form that used to live at `lander-2.html` is now **`index.html`** — the home
@@ -28,8 +36,8 @@ Live reference build: https://paulblack6522.github.io/ara-crypto-tax/
 
 | # | Job | Files |
 |---|---|---|
-| 1 | Wire the **3 forms** to a real endpoint (POST + email) | `assets/js/lander2.js`, `assets/js/wizard.js`, `contact.html` |
-| 2 | Wire **"Call me now"** to real telephony (or remove it) | `assets/js/lander2.js` |
+| 1 | Wire the **3 forms** to a real endpoint (POST + email) | `assets/js/wizard.js` (`file.html`), `assets/js/lander2.js` (`request.html`), `contact.html` |
+| 2 | Wire **"Call me now"** to real telephony (or remove it) | `assets/js/lander2.js` (`request.html`) |
 | 3 | **Update `privacy.html` BEFORE the forms go live** | `privacy.html` |
 | 4 | Swap **placeholder phone / email / address** | all pages |
 | 5 | Flip **noindex → index** and update canonicals + sitemap | all pages, `robots.txt`, `sitemap.xml` |
@@ -57,10 +65,11 @@ browser: forcing a click on every button in the form leaves the URL unchanged, n
 string). **If you make the steps work without JS, or remove that `hidden`, change the button
 to `type="button"` in the same edit.**
 
-> The file is still called `lander2.js` after the rename to `index.html`. Renaming it is
-> safe if you prefer — it is referenced once, in `index.html`'s `<head>`.
+> The file is still called `lander2.js` after two renames (`lander-2.html` → `index.html`
+> → `request.html`). Renaming it is safe if you prefer — it is referenced once, in
+> `request.html`'s `<head>`.
 
-### 2.1 Request form — `index.html` (the home page)
+### 2.1 Callback form — `request.html`
 
 **File:** `assets/js/lander2.js`
 **`function submit()`** — search for `/* 3. Scheduled submit — demo only`.
@@ -124,7 +133,7 @@ the input. Fields are read from `data-name` on the group.
 On 2026-08-05 the client asked for the demo notices to be removed, because the build is
 reviewed behind a watermark rather than shown to the public. So:
 
-- `index.html` → **"Your callback is requested… A preparer will call you"**
+- `request.html` → **"Your callback is requested… A preparer will call you"**
 - `contact.html` → **"Thank you. We have your message and a preparer will reply"**
 - `file.html` → **"We have your details… one of our tax preparers will contact you"**
 
@@ -159,7 +168,7 @@ held there, what it is worth, a login, an API key or a recovery phrase. See §6.
 Read them off the `name` attributes; nothing is renamed in JS.
 
 - **`contact.html`** — `name`, `email`, `phone`, `message`, `consent`
-- **`index.html`** — `tax_years`, `activities`, `tx_volume`, `venue_count`, `venues`,
+- **`request.html`** — `tax_years`, `activities`, `tx_volume`, `venue_count`, `venues`,
   `venues_other`, `prior_reporting`, `full_name`, `email`, `phone`, `contact_method`,
   `timezone`, `callback_slot` / `callback_date` + `callback_time`, `consent`
 - **`file.html`** — 57 groups, read them off `data-name` on each `.us-form-group`:
@@ -198,7 +207,7 @@ This is **tax return information**. Treat it as such from the first keystroke.
 
 ---
 
-## 4. "Call me now" (`index.html`)
+## 4. "Call me now" (`request.html`)
 
 `initCallNow()` in `assets/js/lander2.js`. Today it validates the contact details, shows an
 "assigning a preparer" overlay, and after 3.5s resolves to a plain confirmation that a
@@ -316,13 +325,16 @@ business name cannot get indexed and later compete with their live site.
 
 ## 9. One funnel
 
-Every "Start your filing" / "Request a callback" button in the site nav and footer points at
-**`index.html#request`** — the short request form on the home page.
+**`index.html` (splash) → Get started → `file.html` (five steps) → confirmation modal.**
+Every "Start your filing" button in the site nav and footer opens `file.html` too.
 
-⚠ **`file.html` is a second, longer path, reachable by its URL and not linked from the nav.**
-It was restored on 2026-08-11 at the client's request. If it should become the main route,
-the nav CTA and the footer link are the two places to repoint — say the word rather than
-guessing, because which form the ads land on is a campaign decision.
+`request.html` is the **alternative** for a visitor who would rather talk first. It is
+linked from the splash, the splash footer, `contact.html` and `forms.html` — never from the
+nav CTA. Both forms are live and both need wiring.
+
+⚠ Which page **paid traffic** lands on is a campaign decision, not a code one. `ads.html`
+still names the site root; if the ads should skip the splash, change the final URL there
+and nowhere else.
 
 ⚠ **Validation is per-question via `data-required` on the field *group*, not `required` on
 the individual input.** Remember this when you test — a group of checkboxes is validated as a
@@ -350,10 +362,14 @@ disabled** after any form change.
 ## 11. File map
 
 ```
-index.html            HOME — and the request form itself (#request).
-                      Six questions + contact + callback booking.
-file.html             "Start your filing" — the long five-step form
+index.html            HOME — one screen, no scroll, Get started -> file.html.
+                      No form on it. Do not add sections; see the comment
+                      at the top of the file.
+file.html             "Start your filing" — the five-step form, MAIN ROUTE
                           ← FORM HOOK: wizard.js, see §2.3
+request.html          "Request a callback" — six questions + callback
+                      booking (was index.html until 2026-08-11)
+                          ← FORM HOOK: lander2.js, see §2.1
 how-it-works.html     The engagement, step by step
 what-you-need.html    Document checklist
 forms.html            Guide to the IRS forms a crypto return involves
@@ -373,8 +389,8 @@ assets/js/site.js     Shared: nav drawer, modals, focus management
 assets/js/wizard.js   file.html — the five-step form, per-step validation,
                       sessionStorage progress, the confirmation modal
                           ← FORM HOOK: the block headed DEMO BUILD (~line 595)
-assets/js/lander2.js  index.html — the request form, the "Other: please specify" reveal,
-                      the callback scheduler and "Call me now"
+assets/js/lander2.js  request.html — the callback form, the "Other: please specify"
+                      reveal, the callback scheduler and "Call me now"
                           ← FORM HOOK: function submit()
                           ← call-now: initCallNow()
 assets/img/           Wordmark + favicon (SVG)
@@ -392,8 +408,9 @@ README.md             Fuller background on the build
 left out of the production web root if you prefer.
 
 **Restored 2026-08-11:** `file.html` + `assets/js/wizard.js`, exactly as originally built.
-**Still deleted:** the previous marketing home page and `lander-2.html` (it became
-`index.html`). Both are in the repository history if anyone needs them back.
+**Renamed 2026-08-11:** the old `index.html` (the six-question form) is now `request.html`;
+the new `index.html` is the splash. **Still deleted:** the original marketing home page.
+It is in the repository history if anyone needs it back.
 
 ---
 

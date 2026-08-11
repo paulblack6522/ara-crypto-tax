@@ -15,8 +15,9 @@ you, including through IRS Free File if you are eligible. Our service is a
 paid, optional alternative in which we prepare your return for you.
 
 What this site is: an information site about a paid preparation service, plus
-a short request form on the home page, used to scope the work before we quote
-it and to book a callback. It is not a filing system and nothing is submitted
+two forms used to scope the work before we quote it - a five-step filing form
+at file.html, and a shorter six-question callback form at request.html. The
+home page is a one-screen introduction that leads to the five-step form. It is not a filing system and nothing is submitted
 to any government body through it.
 
 What this site is not: it carries no prices, no ratings, no client testimonials
@@ -34,7 +35,7 @@ hello@aratax-example.com.
   covers, who it is for, and the request form itself &mdash; six short questions
   about the shape of your activity, then a time for a preparer to call you.
 - [Start your filing](https://paulblack6522.github.io/ara-crypto-tax/file.html): the
-  long five-step form for people who would rather give the full picture up front &mdash;
+  main five-step form for people who would rather give the full picture up front &mdash;
   filing basics, where the activity happened, what kind of activity, records and prior
   filings, and how to reach you.
 - [How it works](https://paulblack6522.github.io/ara-crypto-tax/how-it-works.html):
@@ -49,11 +50,11 @@ hello@aratax-example.com.
   who we are, what we do, and what we do not do.
 - [Contact](https://paulblack6522.github.io/ara-crypto-tax/contact.html): phone,
   email, location and a short message form.
-- [Start your filing](https://paulblack6522.github.io/ara-crypto-tax/#request):
-  the request form, on the home page. Six questions: the tax years, the kinds of
-  activity, roughly how many transactions, how many exchanges and wallets, which
-  exchanges and wallets by name, and what was reported in prior years &mdash; then
-  your contact details and a callback time.
+- [Request a callback](https://paulblack6522.github.io/ara-crypto-tax/request.html):
+  the short form. Six questions: the tax years, the kinds of activity, roughly how
+  many transactions, how many exchanges and wallets, which exchanges and wallets by
+  name, and what was reported in prior years &mdash; then your contact details and a
+  callback time.
 
 ## Policies
 

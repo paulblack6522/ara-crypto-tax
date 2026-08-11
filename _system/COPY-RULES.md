@@ -221,16 +221,22 @@ which is what the impersonation lander we declined on 2026-08-01 was built to do
 
 ---
 
-## 4. The intake wizard — RETIRED 2026-08-05
+## 4. The five-step filing form — LIVE AGAIN 2026-08-11
 
-> **This section no longer describes anything that is built.** The five-step
-> wizard (`file.html`, `assets/js/wizard.js`) was deleted at the client's
-> instruction, and the short request form — six questions plus a callback
-> booking, formerly `lander-2.html` — became `index.html`. Kept as research;
-> see the live field table in `FACTS.md` §8. Do not build to the spec below
-> without checking with the client first.
+> **This section describes what is built.** The five-step form (`file.html`,
+> `assets/js/wizard.js`) was deleted on 2026-08-05 and **restored on
+> 2026-08-11 at the client's request**. It is the main route: `index.html` is
+> a one-screen splash whose **Get started** button opens it. The six-question
+> callback form (formerly `lander-2.html`, then `index.html`) is now
+> `request.html` and remains the alternative path.
+>
+> ⚠ **The splash has its own rule: it must fit on one screen.** Nothing may be
+> added to `index.html` — no extra paragraph, logo strip, testimonial or
+> section. Copy that wants to exist goes on `how-it-works.html`. The two
+> mandatory footer disclosures stay verbatim there as everywhere else; if
+> something has to give on a small screen it is our content, never theirs.
 
-## 4a. The retired wizard — five steps, fixed
+## 4a. The five-step form — steps, fixed
 
 Every builder must use these five step names, in this order, with this
 numbering. They appear in the `.us-step-indicator`, in each step's `<legend>`,
