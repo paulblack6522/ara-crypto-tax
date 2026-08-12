@@ -7,6 +7,13 @@ Deploy = copy these files to the web root. Nothing to compile.
 
 Live reference build: https://paulblack6522.github.io/ara-crypto-tax/
 
+**Start with `README.md`** for the file layout, then this file for the work, then
+**`PLACEHOLDERS.md`** for every stand-in value that has to be replaced before launch.
+
+> `ads.html` (our internal Google Ads campaign sheet) is **not in this package**. It was
+> never part of the website — it lived in the repository as a working document and is not
+> linked from any page.
+
 > **Changed 2026-08-11 — the funnel changed shape. Read this first.**
 >
 > 1. The five-step **"Start your filing"** page (`file.html` + `assets/js/wizard.js`) is
@@ -44,6 +51,8 @@ Live reference build: https://paulblack6522.github.io/ara-crypto-tax/
 | 3 | **Update `privacy.html` BEFORE the forms go live** | `privacy.html` |
 | 4 | Swap **placeholder phone / email / address** | all pages |
 | 5 | Flip **noindex → index** and update canonicals + sitemap | all pages, `robots.txt`, `sitemap.xml` |
+
+Jobs 3, 4 and 5 are all covered file-by-file, with counts, in **`PLACEHOLDERS.md`**.
 
 Details for each are below.
 
@@ -334,9 +343,8 @@ Every "Start your filing" button in the site nav and footer opens `file.html` to
 `request.html` is the **alternative** for a visitor who would rather talk first. It is
 linked from the home page footer, `contact.html` and `forms.html` — never from the nav CTA. Both forms are live and both need wiring.
 
-⚠ Which page **paid traffic** lands on is a campaign decision, not a code one. `ads.html`
-still names the site root; if the ads should land straight on the form, change the final
-URL there and nowhere else.
+⚠ Which page **paid traffic** lands on is a campaign decision, not a code one, and it is
+settled outside this package.
 
 ⚠ **Validation is per-question via `data-required` on the field *group*, not `required` on
 the individual input.** Remember this when you test — a group of checkboxes is validated as a
@@ -383,8 +391,6 @@ terms.html            Terms
 accessibility.html    Accessibility statement
 thanks.html           Confirmation
 404.html              Not found
-ads.html              Internal: the Google Ads campaign build sheet (noindex, not linked
-                      from the site nav — remove it before production if you prefer)
 
 assets/css/site.css   All styles (USWDS-derived, public domain)
 assets/js/site.js     Shared: nav drawer, modals, focus management

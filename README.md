@@ -1,18 +1,79 @@
-# Ara Tax Services LLC — crypto tax filing site (sample build)
+# Ara Tax Services LLC — crypto tax filing site
 
-Static site. No build step, no framework, no dependencies, no third-party requests.
-Open `index.html` in a browser and it works.
+Static site. **No build step, no framework, no package manager, no dependencies, no
+third-party requests.** Unzip it, open `index.html` in a browser, and the whole site
+works — including with no network connection.
+
+To deploy: copy these files to the web root. There is nothing to compile.
 
 **Live preview:** https://paulblack6522.github.io/ara-crypto-tax/
 
 ---
 
+## Read these three files, in this order
+
+| File | What it tells you |
+|---|---|
+| **`README.md`** (this file) | What the site is, how it is laid out, why it is built this way |
+| **`DEV-HANDOVER.md`** | **The work list.** The three forms, the exact line to hook each one, and what must not be broken |
+| **`PLACEHOLDERS.md`** | Every stand-in value — phone, email, address, site URL — with a per-file count |
+
+## The layout
+
+Every page is a plain `.html` file at the top level. There is no routing, no partials
+system and no templating: what you open is what the browser gets.
+
+```
+index.html          Home. What the service is, how it works, what we handle,
+                    Form 1099-DA. Its buttons open file.html.
+file.html           "Start your filing" — the five-step form. The main route.
+request.html        "Request a callback" — six questions + a callback time.
+how-it-works.html   The engagement, step by step
+what-you-need.html  Document checklist
+forms.html          Guide to the IRS forms a crypto return involves
+faq.html            16 questions
+about.html          Who the firm is, and what it is not
+contact.html        Contact details + a short message form
+privacy.html        Privacy policy — REAL CCPA/CPRA section, read before wiring forms
+terms.html          Terms of service
+accessibility.html  Accessibility statement
+thanks.html         Confirmation page (nothing links to it — it is there for a
+                    POST-redirect-GET once the forms are wired)
+404.html            Not found
+
+assets/css/site.css All styles. One file. USWDS-derived, public domain.
+assets/js/site.js   Shared behaviour: nav drawer, modals, focus management
+assets/js/wizard.js Drives file.html          <- FORM HOOK
+assets/js/lander2.js Drives request.html      <- FORM HOOK
+assets/img/         Wordmark and favicon (SVG)
+
+favicon.ico  apple-touch-icon.png
+robots.txt  sitemap.xml  sitemap.xsl  llms.txt
+
+_system/            Editorial reference, NOT served content. FACTS.md holds the
+                    IRS-sourced statements the site is allowed to make; COPY-RULES.md
+                    holds the copy rules; PARTIALS.html holds the shared header,
+                    footer and modal markup. Safe to leave out of the web root.
+```
+
+## Where do I edit…?
+
+| …this | …in this file |
+|---|---|
+| The phone number, email or address | everywhere — see `PLACEHOLDERS.md` |
+| Any colour, spacing or type size | `assets/css/site.css` (design tokens are in `:root` at the top) |
+| What a form does when submitted | `assets/js/wizard.js`, `assets/js/lander2.js`, or the inline script at the bottom of `contact.html` — see `DEV-HANDOVER.md` §2 |
+| The header, footer or nav | each page carries its own copy; `_system/PARTIALS.html` is the canonical version to copy from |
+| A factual claim about tax treatment | `_system/FACTS.md` first — **no tax claim goes on a page unless a line in `FACTS.md` supports it** |
+
+---
+
 ## What this is
 
-A site about filing US federal tax reporting on cryptocurrency activity. The home page is
-a single screen that says what the service is and opens the filing form with one button;
-the form itself asks five short sets of questions about the shape of your activity. The
-visual language is the **U.S. Web Design System**,
+A site about filing US federal tax reporting on cryptocurrency activity. The home page
+explains what the service is and opens the filing form; the form asks five short sets of
+questions about the shape of your activity. The visual language is the
+**U.S. Web Design System**,
 which is in the public domain — that is what gives federal sites their plain, boxy,
 high-contrast look, and it is legitimately usable by a private firm.
 
@@ -35,26 +96,6 @@ high-contrast look, and it is legitimately usable by a private firm.
 Every element that would imply government affiliation has been deliberately left out:
 no `.gov` banner, no "official website of the United States government" line, no flag,
 no seal, no eagle-and-scales, and no "IRS" in the brand, wordmark, title or domain.
-
-## Pages
-
-| File | Purpose |
-|---|---|
-| `index.html` | **Home** — what the service is, three steps, what we handle, 1099-DA |
-| `file.html` | **Start your filing** — the five-step form, the main route |
-| `request.html` | **Request a callback** — six questions + callback booking |
-| `how-it-works.html` | The engagement, step by step |
-| `forms.html` | Guide to the IRS forms a crypto return involves |
-| `what-you-need.html` | Document checklist |
-| `faq.html` | 16 questions, accordion |
-| `about.html` | Who we are, and what we are not |
-| `contact.html` | Contact details + short message form |
-| `privacy.html` · `terms.html` · `accessibility.html` | Legal |
-| `thanks.html` · `404.html` | Confirmation, not-found |
-
-`_system/` holds the build spec: the design tokens, the copy rules, and `FACTS.md` —
-the researched, IRS-sourced statements the site is allowed to make. **No tax claim
-should be added to any page unless it is supported by a line in `FACTS.md`.**
 
 ---
 
